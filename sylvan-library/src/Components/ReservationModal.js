@@ -1,19 +1,32 @@
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Container } from 'react-bootstrap';
+import SearchBar from './SubComponents/ReservationModal/SearchBar';
+import Basket from './SubComponents/ReservationModal/Basket';
 
 export default function ReservationModal({ show, handleClose }) {
 
     return (
-        <Modal show={show} onHide={handleClose} size='xl'>
+        <Modal show={show} onHide={handleClose} size='xl' className='reservation-modal'>
             <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>Let's get you some cards!</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+            <Modal.Body>
+                <Container>
+                    <Row className='reservation-modal-body'>
+                        <Col>
+                            <SearchBar />
+                        </Col>
+                        <Col className='basket' xs xl={3}>
+                            <Basket />
+                        </Col>
+                    </Row>
+                </Container>
+            </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
-                    Close
+                    Nevermind
                 </Button>
                 <Button variant="primary" onClick={handleClose}>
-                    Save Changes
+                    Submit Request
                 </Button>
             </Modal.Footer>
         </Modal>

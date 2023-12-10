@@ -1,0 +1,10 @@
+@import './variables.scss';
+
+//Modules Import
+@import './Modules/search';
+@import './Modules/reservation-modal';
+@import './Modules/basket';
+@import './Modules/results';
+
+//Pages Import
+@import './Pages/home';

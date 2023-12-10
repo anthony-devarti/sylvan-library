@@ -11,9 +11,9 @@ export default function Home() {
     const handleShow = () => setShow(true)
 
     return (
-        <>
+        <div className='home'>
             <Button onClick={() => handleShow()}>Reserve Cards</Button>
             <ReservationModal show={show} handleClose = {handleClose}/>
-        </>
+        </div>
     )
 }

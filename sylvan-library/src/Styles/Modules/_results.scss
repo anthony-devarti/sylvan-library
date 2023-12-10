@@ -1,0 +1,19 @@
+.results {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+
+    //the individual result component
+    .result{
+        padding: 1rem;
+        margin: 1rem;
+        border: 1px solid;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+
+        .img{
+            max-width: 10vw;
+        }
+    }
+}

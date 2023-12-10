@@ -1,0 +1,33 @@
+.search .search-field {
+  border-radius: 20px;
+}
+
+.reservation-modal .reservation-modal-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.basket {
+  border-left: solid;
+}
+
+.results {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+}
+.results .result {
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.results .result .img {
+  max-width: 10vw;
+}
+
+.home {
+  background-color: aqua;
+}/*# sourceMappingURL=style.css.map */
