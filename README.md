@@ -29,6 +29,9 @@ Reservation - a collection of cards that is currently being borrowed.  Reservati
   <li>Complete: the reservation has been returned and the lender has confirmed that all of the cards are present in reasonable condition</li>
   <li>Incomplete: the reservation has been returned and is in the lender's posession, but there are one or more cards missing or in conditions that do not match expectations</li>
 </ul>
+### Reservation Workflow
+![Start](https://github.com/anthony-devarti/sylvan-library/assets/98314025/8269b06d-da83-4a0b-8849-64469bc6170e)
+
 
 
 ## Echo MTG integration
