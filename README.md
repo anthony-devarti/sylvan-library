@@ -16,12 +16,15 @@ The goal: To tie into echoMTG's database and use the colleciton there to search 
 ## Terms:
 Reservation - a collection of cards that is currently being borrowed.  Reservations can be pending, approved, delivered, disputed, late, delinquent, returned, complete, or incomplete
 <ul>
+  <li>Unrequested: The borrower has started a reservation, but has not yet submitted it.</li>
   <li>Pending:  The borrower has requested the reservation, but the admin has not yet approved it</li>
   <li>Approved: The lender has approved a reservation, but the cards are not yet in the borrower's posession</li>
   <li>Delivered: The borrower has posession of the reservation</li>
+  <li>Borrowed: The borrower has posession of the reservation and has confirmed that it is complete.</li>
   <li>Disputed: the borrower has posession of the reservation, but there are one or more cards missing or in conditions that do not match expectations</li>
   <li>Late: The agreed upon return date has passed and the items have not been returned</li>
   <li>Delinquent: X days have passed since the agreed upon return date.  The borrower has received a delinquent strike.  (lender can choose to disallow borrowers with one or more delinquent strikes)</li>
+  <li>Lost: The borrower has lost at least one of the reserved items.  Remediation is necessary.</li>
   <li>Returned: the reservation has been returned and is no longer in the borrower's posession, but the lender has not yet confirmed that all of the cards are present and in the expected condition</li>
   <li>Complete: the reservation has been returned and the lender has confirmed that all of the cards are present in reasonable condition</li>
   <li>Incomplete: the reservation has been returned and is in the lender's posession, but there are one or more cards missing or in conditions that do not match expectations</li>
