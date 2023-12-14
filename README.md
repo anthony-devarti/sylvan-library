@@ -26,3 +26,7 @@ Reservation - a collection of cards that is currently being borrowed.  Reservati
   <li>Complete: the reservation has been returned and the lender has confirmed that all of the cards are present in reasonable condition</li>
   <li>Incomplete: the reservation has been returned and is in the lender's posession, but there are one or more cards missing or in conditions that do not match expectations</li>
 </ul>
+
+
+## Echo MTG integration
+This appilicaiton is designed to integrate with echoMTG's api.  I want to get this to a vaguely "working" ish state before I bug them about giving me a static access token.  Until that point, we will need to use a rotating access token that changes daily.  You will need to log in to grab that.  For everyone's convenience, the token is saved in the App Constants file, so if the token needs to be used elsewhere in the future, we can just use that variable and only have to update one thing.
