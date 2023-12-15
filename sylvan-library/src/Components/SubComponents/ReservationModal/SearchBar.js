@@ -42,7 +42,7 @@ export default function SearchBar({addToBasket}) {
             <div className='results'>
                 {searchResults.map((item) => {
                     return (
-                        <Result item={item} />
+                        <Result item={item} addToBasket={addToBasket}/>
                     )
                 })}
             </div>
