@@ -1,3 +1,37 @@
+@import '../variables';
+
 .home {
-    background-color: aqua;
+    background-image: url('https://cdna.artstation.com/p/assets/covers/images/000/825/200/large/yeong-hao-han-144455-sylvanlibrary-lr.jpg?1433915846');
+    width: 100vw;
+    height: 100vh;
+    // padding-top: 78px;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .hero-text{
+        color: black;
+        font-size: 120pt;
+        position: relative;
+        top: 20vh;
+        font-weight: 900;
+        -webkit-text-stroke-width: 3px;
+        -webkit-text-stroke-color: rgb(255, 255, 255);
+        font-family: Noto-serif;
+        background-color: rgb(17 17 17 / 30%);
+    }
+
+    .btn {
+        width: 70vw;
+        height: 12rem;
+        font-size: 50pt;
+        margin-top: 40vh;
+        border-radius: 90pt;
+        background-color: $reserveColor;
+        border-color: white;
+        font-family: noto-serif;
+    }
+
+    .btn:hover{
+        background-color: $reservationHover
+    }
 }

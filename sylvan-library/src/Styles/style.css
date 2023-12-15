@@ -4,12 +4,24 @@
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
 }
+.search .btn {
+  background-color: #962c6a;
+  border-color: black;
+  border-radius: 15pt;
+}
+.search .btn:hover {
+  background-color: #70194d;
+}
 .search .search-bar {
   display: flex;
   flex-direction: row;
 }
 .search .search-bar .search-bar > * {
   padding: 1rem;
+}
+.search .search-bar .btn {
+  background-color: #528b3a;
+  border-color: black;
 }
 .search .go-button {
   border-top-right-radius: 20px;
@@ -21,6 +33,13 @@
 .reservation-modal .reservation-modal-body {
   display: flex;
   flex-direction: row;
+}
+.reservation-modal .modal-content {
+  min-height: 80vh;
+}
+.reservation-modal .modal-content .modal-footer {
+  display: flex;
+  justify-content: space-around;
 }
 
 .basket {
@@ -39,11 +58,43 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  transition: all 0.5s ease-in-out;
 }
 .results .result .img {
   max-width: 10vw;
 }
+.results .result:hover {
+  transform: scale(1.01);
+}
 
 .home {
-  background-color: aqua;
+  background-image: url("https://cdna.artstation.com/p/assets/covers/images/000/825/200/large/yeong-hao-han-144455-sylvanlibrary-lr.jpg?1433915846");
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home .hero-text {
+  color: black;
+  font-size: 120pt;
+  position: relative;
+  top: 20vh;
+  font-weight: 900;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: rgb(255, 255, 255);
+  font-family: Noto-serif;
+  background-color: rgba(17, 17, 17, 0.3);
+}
+.home .btn {
+  width: 70vw;
+  height: 12rem;
+  font-size: 50pt;
+  margin-top: 40vh;
+  border-radius: 90pt;
+  background-color: #962c6a;
+  border-color: white;
+  font-family: noto-serif;
+}
+.home .btn:hover {
+  background-color: #70194d;
 }/*# sourceMappingURL=style.css.map */

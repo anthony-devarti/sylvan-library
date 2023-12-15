@@ -12,6 +12,7 @@ export default function Home() {
 
     return (
         <div className='home'>
+            <div className='hero-text'>Sylvan Library</div>
             <Button onClick={() => handleShow()}>Reserve Cards</Button>
             <ReservationModal show={show} handleClose = {handleClose}/>
         </div>

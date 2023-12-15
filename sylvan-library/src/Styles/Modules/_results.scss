@@ -11,9 +11,14 @@
         border-radius: 20px;
         display: flex;
         flex-direction: column;
+        transition: all .5s ease-in-out;
 
         .img{
             max-width: 10vw;
         }
+    }
+
+    .result:hover{
+        transform: scale(1.01)
     }
 }

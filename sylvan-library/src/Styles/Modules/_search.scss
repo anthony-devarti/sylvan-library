@@ -6,12 +6,27 @@
         border-top-right-radius: 0px;
     }
 
+    .btn{
+        background-color: $reserveColor;
+        border-color: black;
+        border-radius: 15pt;
+    }
+
+    .btn:hover{
+        background-color: $reservationHover
+    }
+
     .search-bar{
         display: flex;
         flex-direction: row;
 
         .search-bar > * {
             padding: 1rem;
+        }
+
+        .btn {
+            background-color: $green;
+            border-color: black;
         }
     }
 

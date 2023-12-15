@@ -44,9 +44,11 @@ export default function ReservationModal({ show, handleClose }) {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
+                {basket.length > 0 &&
                 <Button variant="danger" onClick={clearCart}>
                     Clear Cart
                 </Button>
+                }
                 <Button variant="secondary" onClick={handleClose}>
                     Nevermind
                 </Button>
