@@ -31,6 +31,16 @@ export default function Basket({contents, removeItemFromBasket}) {
                     )
                 })}
             </thead>
+            <tfoot>
+                <tr>
+                    <td>
+                        <b>Total: </b>
+                    </td>
+                    <td>
+                        {contents.length}
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     )
 }

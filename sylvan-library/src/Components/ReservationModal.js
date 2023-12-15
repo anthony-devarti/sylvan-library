@@ -23,11 +23,8 @@ export default function ReservationModal({ show, handleClose }) {
     }
 
     function removeItemFromBasket(itemToRemove){
-        console.log(basket.filter((item) => item != itemToRemove))//debug
         setBasket(basket.filter((item) => item != itemToRemove))
     }
-
-    console.log(basket) //debug
 
     return (
         <Modal show={show} onHide={handleClose} size='xl' className='reservation-modal' backdrop="static">
