@@ -1,8 +1,22 @@
 import { Modal, Button, Row, Col, Container } from 'react-bootstrap';
 import SearchBar from './SubComponents/ReservationModal/SearchBar';
 import Basket from './SubComponents/ReservationModal/Basket';
+import { useState } from 'react'
 
 export default function ReservationModal({ show, handleClose }) {
+
+    //VINCE: this piece of state is kept way up 
+    const [ basket, setBasket ] = useState([])
+
+    //add something to the basket
+    function addToBasket(itemToAdd){
+        setBasket(
+            [
+                ...basket,
+                itemToAdd
+            ]
+        )
+    }
 
     return (
         <Modal show={show} onHide={handleClose} size='xl' className='reservation-modal'>
@@ -12,11 +26,11 @@ export default function ReservationModal({ show, handleClose }) {
             <Modal.Body>
                 <Container>
                     <Row className='reservation-modal-body'>
-                        <Col>
-                            <SearchBar />
+                        <Col xs xl={9}>
+                            <SearchBar addToBasket={addToBasket} />
                         </Col>
                         <Col className='basket' xs xl={3}>
-                            <Basket />
+                            <Basket contents={basket}/>
                         </Col>
                     </Row>
                 </Container>

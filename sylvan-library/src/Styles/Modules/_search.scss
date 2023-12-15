@@ -1,5 +1,24 @@
 .search {
     .search-field {
-        border-radius: 20px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    .search-bar{
+        display: flex;
+        flex-direction: row;
+
+        .search-bar > * {
+            padding: 1rem;
+        }
+    }
+
+    .go-button{
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
     }
 }

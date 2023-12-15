@@ -1,5 +1,21 @@
 .search .search-field {
-  border-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.search .search-bar {
+  display: flex;
+  flex-direction: row;
+}
+.search .search-bar .search-bar > * {
+  padding: 1rem;
+}
+.search .go-button {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
 }
 
 .reservation-modal .reservation-modal-body {
@@ -14,7 +30,7 @@
 .results {
   display: flex;
   flex-direction: row;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .results .result {
   padding: 1rem;

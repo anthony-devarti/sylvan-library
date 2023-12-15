@@ -5,11 +5,10 @@ import { useState } from 'react'
 import Result from './Result'
 import { ECHO_TOKEN } from '../../../AppConstants'
 
-export default function SearchBar() {
+export default function SearchBar({addToBasket}) {
 
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    console.log(searchResults)
 
     const request = async () => {
         const endpoint = `https://api.echomtg.com/api/inventory/view/?start=0&limit=100$sort=name&search=${search}`;
@@ -20,27 +19,30 @@ export default function SearchBar() {
             }
         })
         const data = await res.json();
-        setSearchResults(data.items)
+        //we probably want to filter these search results according to outstanding inventory ids that are not available, that way we're not showing stuff that isn't available
+        //this process will actively require us to have the backend running and hooked up correctly.
+        if (data.status != 'error') {
+            setSearchResults(data.items)
+        }
         return data;
     }
 
     return (
         <div className='search'>
-            <div>
-
-                <Form.Label htmlFor="search">Card Search</Form.Label>
+            <div className='search-bar'>
                 <Form.Control
                     className='search-field'
                     type="text"
                     id="search"
+                    placeholder='Search'
                     onChange={e => setSearch(e.target.value)}
                 />
-                <Button onClick={request}>Go!</Button>
+                <Button className='go-button' onClick={request}>Go!</Button>
             </div>
             <div className='results'>
                 {searchResults.map((item) => {
                     return (
-                        <Result item={item}/>
+                        <Result item={item} />
                     )
                 })}
             </div>
