@@ -30,7 +30,7 @@ export default function ReservationModal({ show, handleClose }) {
     console.log(basket) //debug
 
     return (
-        <Modal show={show} onHide={handleClose} size='xl' className='reservation-modal'>
+        <Modal show={show} onHide={handleClose} size='xl' className='reservation-modal' backdrop="static">
             <Modal.Header closeButton>
                 <Modal.Title>Let's get you some cards!</Modal.Title>
             </Modal.Header>
