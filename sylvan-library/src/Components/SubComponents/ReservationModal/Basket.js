@@ -1,8 +1,10 @@
 //shows the user what cards they have already added to their cart to reserve
+import {Button} from 'react-bootstrap';
 
 const items = [{ name: 'The Chain Veil', quantity: 2 }, { name: 'Butts', quantity: 20 }]
 
-export default function Basket({ contents }) {
+export default function Basket({contents, removeItemFromBasket}) {
+
     return (
         <table>
             <thead>
@@ -11,17 +13,19 @@ export default function Basket({ contents }) {
                         <b>Name</b>
                     </td>
                     <td>
-                        <b>QTY</b>
+                        <b>Remove</b>
                     </td>
                 </tr>
-                {items.map((item) => {
+                {contents.map((item) => {
                     return (
                         <tr>
                             <td>
                                 {item.name}
                             </td>
                             <td>
-                                {item.quantity}
+                                <Button variant="danger" onClick={() => removeItemFromBasket(item)}>
+                                    X
+                                </Button>
                             </td>
                         </tr>
                     )

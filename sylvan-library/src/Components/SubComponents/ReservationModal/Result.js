@@ -1,7 +1,7 @@
 // the results of the search can be seen and selected from this section 
 import { Button } from 'react-bootstrap'
 
-export default function Results({item}) {
+export default function Results({item, addToBasket}) {
 
     return (
         <div className="result">
@@ -11,7 +11,7 @@ export default function Results({item}) {
             <div>
                 {item.name}
             </div>
-            <Button onClick={() => console.log('butts', item.inventory_id)}>Reserve</Button>
+            <Button onClick={() => addToBasket(item)}>Reserve</Button>
         </div>
     )
 }

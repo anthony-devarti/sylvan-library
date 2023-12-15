@@ -18,6 +18,17 @@ export default function ReservationModal({ show, handleClose }) {
         )
     }
 
+    function clearCart(){
+        setBasket([])
+    }
+
+    function removeItemFromBasket(itemToRemove){
+        console.log(basket.filter((item) => item != itemToRemove))//debug
+        setBasket(basket.filter((item) => item != itemToRemove))
+    }
+
+    console.log(basket) //debug
+
     return (
         <Modal show={show} onHide={handleClose} size='xl' className='reservation-modal'>
             <Modal.Header closeButton>
@@ -27,15 +38,18 @@ export default function ReservationModal({ show, handleClose }) {
                 <Container>
                     <Row className='reservation-modal-body'>
                         <Col xs xl={9}>
-                            <SearchBar addToBasket={addToBasket} />
+                            <SearchBar addToBasket={addToBasket}/>
                         </Col>
                         <Col className='basket' xs xl={3}>
-                            <Basket contents={basket}/>
+                            <Basket contents={basket}  removeItemFromBasket={removeItemFromBasket}/>
                         </Col>
                     </Row>
                 </Container>
             </Modal.Body>
             <Modal.Footer>
+                <Button variant="danger" onClick={clearCart}>
+                    Clear Cart
+                </Button>
                 <Button variant="secondary" onClick={handleClose}>
                     Nevermind
                 </Button>
