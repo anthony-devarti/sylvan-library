@@ -29,9 +29,11 @@
         background-color: $reserveColor;
         border-color: white;
         font-family: noto-serif;
+        transition: all .5s ease-in-out;
     }
 
     .btn:hover{
-        background-color: $reservationHover
+        background-color: $reservationHover;
+        transform: scale(1.005)
     }
 }

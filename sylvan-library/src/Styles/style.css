@@ -94,7 +94,9 @@
   background-color: #962c6a;
   border-color: white;
   font-family: noto-serif;
+  transition: all 0.5s ease-in-out;
 }
 .home .btn:hover {
   background-color: #70194d;
+  transform: scale(1.005);
 }/*# sourceMappingURL=style.css.map */
