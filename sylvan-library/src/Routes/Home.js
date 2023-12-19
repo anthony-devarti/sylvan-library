@@ -22,12 +22,12 @@ export default function Home() {
             <Button onClick={() => handleShow()}>Reserve Cards</Button>
             <ReservationModal show={show} handleClose={handleClose} />
             <Button onClick={handleShowForm}>Test</Button>
-            <Modal show={showForm} handleClose={handleCloseForm}>
+            <Modal show={showForm} handleClose={handleCloseForm} size='lg'>
                 <Modal.Header>
                     Authentication
                 </Modal.Header>
                 <Modal.Body>
-                    <LoginForm />
+                    <CreateUserForm />
                 </Modal.Body>
             </Modal>
         </div>
