@@ -3,6 +3,11 @@ lending client
 
 The goal: To tie into echoMTG's database and use the colleciton there to search for available items, remove items from the colleciton when they are being loaned out, then return them to the collection when they are returned.
 
+## Firing up Your Gitpod workspace
+cd into sylvan library.
+Dont forget to npm install!  You need to make sure your new workspace has everything you need
+Then npm start to check out your 
+
 ## User Types:
 ### Lender - controls the collection (admin)
 ### Borrower - can choose to rent or return items

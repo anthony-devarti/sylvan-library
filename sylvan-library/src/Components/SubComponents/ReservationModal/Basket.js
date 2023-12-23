@@ -1,9 +1,17 @@
 //shows the user what cards they have already added to their cart to reserve
-import {Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
-const items = [{ name: 'The Chain Veil', quantity: 2 }, { name: 'Butts', quantity: 20 }]
 
-export default function Basket({contents, removeItemFromBasket}) {
+export default function Basket({ removeItemFromBasket }) {
+
+    const contents = useSelector(state =>
+        state.basket.contents
+    )
+
+    const liability = useSelector(state =>
+        state.basket.value
+    )
 
     return (
         <table>
@@ -37,7 +45,7 @@ export default function Basket({contents, removeItemFromBasket}) {
                         <b>Total: </b>
                     </td>
                     <td>
-                        {contents.length}
+                        {contents.length} items valued at ${liability}
                     </td>
                 </tr>
             </tfoot>
