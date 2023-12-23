@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import cartTotal from '../../utilities/cartTotal'
 
 export const searchSlice = createSlice({
   name: 'search',
