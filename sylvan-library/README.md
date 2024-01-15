@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+---
+
+#### Database Initial Work
+
+Node does not yet have sha2_password usage implemented, so we will need to set the password type to `mysql_native_password` for now.
+This setup will allow sylvan to use node.js to connect to the underlying MySQL server. I am planning to determine a SQLite equivalent process once the SQL portion is setup (this will allow for a full-scale and lightweight version). In the meantime, I will add a Dockerfile which can build out the MySQL client and pass it the credentials and setup drafted below.
+
+```
+CREATE USER 'sylvan'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+CREATE DATABASE sylvandb;
+GRANT ALL ON sylvandb.* TO sylvan;
+FLUSH PRIVILEGES;
+```
