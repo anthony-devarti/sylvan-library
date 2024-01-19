@@ -7,7 +7,8 @@ export const basketSlice = createSlice({
     contents: [],
     total: 0,
     value: 0,
-    expirationTime: 'today' //expiration time should be the start of the basket session plus 30 minutes?
+    expirationTime: 'today', //expiration time should be the start of the basket session plus 30 minutes?
+    reservedCards: []
   },
   reducers: {
     addItem: (state, action) => {
@@ -24,6 +25,10 @@ export const basketSlice = createSlice({
       //update the value whenever an item is removed
       if (state.contents.length) state.value = cartTotal(state.contents)
     },
+    updateReservedCards: (state, action) => {
+      state.reservedCards = action.payload
+    }
+  //todo: add this functionality back
     // clearCart: () => {
     //   return(
     //     initialState
@@ -33,6 +38,6 @@ export const basketSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItem, removeItem, clearCart } = basketSlice.actions
+export const { addItem, removeItem, clearCart, updateReservedCards } = basketSlice.actions
 
 export default basketSlice.reducer

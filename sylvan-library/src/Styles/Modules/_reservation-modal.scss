@@ -1,14 +1,29 @@
+@import '../variables';
+
 .reservation-modal {
-    .reservation-modal-body{
+
+    .reservation-modal-body {
         display: flex;
         flex-direction: row;
     }
 
-    .modal-content{
+    .modal-content {
 
         min-height: 80vh;
+        
+        .modal-header {
+            background-color: $app-background;
+            color: white;
+        }
+
+        .modal-body{
+            background-color: $app-background;
+            color: white;
+
+        }
 
         .modal-footer {
+            background-color: $app-background;
             display: flex;
             justify-content: space-around;
         }

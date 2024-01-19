@@ -4,11 +4,14 @@ import { Form, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import Result from './Result'
 import { ECHO_TOKEN } from '../../../AppConstants'
+import { useSelector } from 'react-redux'
 
 export default function SearchBar({addToBasket}) {
 
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([])
+
+    const reservedCardsInState = useSelector(state => state.basket.reservedCards)
 
     const request = async () => {
         const endpoint = `https://api.echomtg.com/api/inventory/view/?start=0&limit=100$sort=name&search=${search}`;
@@ -19,11 +22,13 @@ export default function SearchBar({addToBasket}) {
             }
         })
         const data = await res.json();
-        //we probably want to filter these search results according to outstanding inventory ids that are not available, that way we're not showing stuff that isn't available
-        //this process will actively require us to have the backend running and hooked up correctly.
+        
         if (data.status != 'error') {
             setSearchResults(data.items)
         }
+       
+        //we probably want to filter these search results according to outstanding inventory ids that are not available, that way we're not showing stuff that isn't available
+
         return data;
     }
 
@@ -40,9 +45,21 @@ export default function SearchBar({addToBasket}) {
                 <Button className='go-button' onClick={request}>Go!</Button>
             </div>
             <div className='results'>
+                { searchResults.length == 0 &&
+                    <>
+                    No Results
+                    </>
+                }
                 {searchResults.map((item) => {
+                    console.log('reservedCardsInState', reservedCardsInState)
+                    console.log('item', item)
+                    //just don't render them here if they are among the cards that are reserved already
+                    if (reservedCardsInState && reservedCardsInState.includes(item.inventory_id)){
+                        console.log('hiding something that is reserved')
+                        return null
+                    }
                     return (
-                        <Result item={item} addToBasket={addToBasket}/>
+                        <Result item={item} addToBasket={addToBasket} key={item.inventory_id}/>
                     )
                 })}
             </div>

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { addItem, removeItem } from '../features/basket/basketSlice'
+import AvailabilityCheck from '../utilities/AvailabilityCheck';
 
 export default function ReservationModal({ show, handleClose }) {
 
@@ -72,7 +73,7 @@ export default function ReservationModal({ show, handleClose }) {
                 </Container>
             </Modal.Body>
             <Modal.Footer>
-                {basket.length > 0 &&
+                {basket.length &&
                     <Button variant="danger" onClick={clearCart}>
                         Clear Cart
                     </Button>
@@ -83,6 +84,7 @@ export default function ReservationModal({ show, handleClose }) {
                 <Button variant="primary" onClick={handleClose}>
                     Submit Request
                 </Button>
+                <AvailabilityCheck />
             </Modal.Footer>
         </Modal>
     )
