@@ -16,8 +16,14 @@ export default function AvailabilityCheck() {
     )
 
     function compareLists(inState, fromAPI) {
-        let arr1 = inState.toSorted((a, b) => a - b)
-        let arr2 = fromAPI.toSorted((a, b) => a - b)
+        let arr1 = []
+        let arr2 = []
+        if (inState && inState.length){
+            arr1 = inState.toSorted((a, b) => a - b)
+        }
+        if (fromAPI && fromAPI.length){
+            arr2 = fromAPI.toSorted((a, b) => a - b)
+        }
 
         if (arr1.length != arr2.length) {
             return false
@@ -40,7 +46,6 @@ export default function AvailabilityCheck() {
     }
 
     useEffect(() => {
-        console.log('in the useEffect')
         if(!compareLists(reservedCardsInState, currentReservedCards)){
             updateReservedCardsList(currentReservedCards)
         }
