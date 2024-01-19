@@ -11,7 +11,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 RUN apt-get install -y nodejs
 
 # Setup MySQL
-RUN mv /var/www/sylvan-library/mysql/ /etc/mysql
+RUN mv /var/www/sylvan-library/mysql/* /etc/mysql
 
 # Install Site
 WORKDIR /var/www/sylvan-library

@@ -104,5 +104,6 @@ docker exec -it (image-id) /bin/bash
 ```
 
 It is lacking an initializer script `CMD init` at the end, which will run the initial tasks for the container at startup. This will include a process that will keep it alive, most likely MySQL since we want that up as long as the container is in use.
+In addition to starting the MySQL service, we should include a shell script at init to start the DB with a provided user/pass and any initial DB tables we may want to have for the app to access.
 
 There is no web server setup to host the app in this Dockerfile, we could install something if that is needed, but for now this Dockerfile at least provides a rudimentary development/testing environment that can be run on anything with Docker installed.
