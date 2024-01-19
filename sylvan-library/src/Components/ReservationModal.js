@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { addItem, removeItem } from '../features/basket/basketSlice'
 import AvailabilityCheck from '../utilities/AvailabilityCheck';
+import addLineItem from '../apiActions/addLineItem';
+import { errorToast, successToast } from './SubComponents/Toastify';
 
 export default function ReservationModal({ show, handleClose }) {
 
@@ -16,6 +18,9 @@ export default function ReservationModal({ show, handleClose }) {
 
     //add something to the basket
     function addToBasket(itemToAdd) {
+        //adding an error as the third argument is causing both to show up onSuccess.
+        //probably just missing something 
+        addLineItem(itemToAdd, successToast(`${itemToAdd.name} was added to your basket`))
         dispatch(
             addItem({
                 id: nanoid(),

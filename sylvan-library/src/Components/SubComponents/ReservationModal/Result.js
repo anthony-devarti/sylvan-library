@@ -11,6 +11,9 @@ export default function Results({item, addToBasket}) {
             <div>
                 {item.name}
             </div>
+            <div>
+                {item.inventory_id}
+            </div>
             <Button onClick={() => addToBasket(item)}>Reserve</Button>
         </div>
     )

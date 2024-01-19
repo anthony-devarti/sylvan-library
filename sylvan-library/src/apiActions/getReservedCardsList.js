@@ -17,7 +17,7 @@ export default function getReservedCardsList() {
 
     return axios.get(baseURL + 'lineitem/', {
         params: {
-            reserved: true
+            hold: true
         }
     })
         .then((response) => {

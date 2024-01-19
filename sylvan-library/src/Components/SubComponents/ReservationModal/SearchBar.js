@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Result from './Result'
 import { ECHO_TOKEN } from '../../../AppConstants'
 import { useSelector } from 'react-redux'
+import getReservedCardsList from '../../../apiActions/getReservedCardsList'
 
 export default function SearchBar({addToBasket}) {
 
@@ -28,7 +29,6 @@ export default function SearchBar({addToBasket}) {
         }
        
         //we probably want to filter these search results according to outstanding inventory ids that are not available, that way we're not showing stuff that isn't available
-
         return data;
     }
 
@@ -51,8 +51,6 @@ export default function SearchBar({addToBasket}) {
                     </>
                 }
                 {searchResults.map((item) => {
-                    console.log('reservedCardsInState', reservedCardsInState)
-                    console.log('item', item)
                     //just don't render them here if they are among the cards that are reserved already
                     if (reservedCardsInState && reservedCardsInState.includes(item.inventory_id)){
                         console.log('hiding something that is reserved')
