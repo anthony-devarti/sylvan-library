@@ -20,6 +20,7 @@ export default function Basket({ removeItemFromBasket }) {
                     <td>
                         <b>Name</b>
                     </td>
+                    <td>ID</td>
                     <td>
                         <b>Remove</b>
                     </td>
@@ -29,6 +30,9 @@ export default function Basket({ removeItemFromBasket }) {
                         <tr>
                             <td>
                                 {item.name}
+                            </td>
+                            <td>
+                                {item.inventory_id}
                             </td>
                             <td>
                                 <Button variant="danger" onClick={() => removeItemFromBasket(item)}>

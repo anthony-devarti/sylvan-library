@@ -1,54 +1,92 @@
 import { Modal, Button, Row, Col, Container } from 'react-bootstrap';
 import SearchBar from './SubComponents/ReservationModal/SearchBar';
 import Basket from './SubComponents/ReservationModal/Basket';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-import { addItem, removeItem } from '../features/basket/basketSlice'
+import { addItem, removeItem, replaceBasket, } from '../features/basket/basketSlice'
 import AvailabilityCheck from '../utilities/AvailabilityCheck';
 import addLineItem from '../apiActions/addLineItem';
+import removeLineitem from '../apiActions/removeLineItem';
 import { errorToast, successToast } from './SubComponents/Toastify';
+import cartTotal from '../utilities/cartTotal';
 
 export default function ReservationModal({ show, handleClose }) {
 
     const dispatch = useDispatch()
 
-    //VINCE: this piece of state is kept way up 
-    //replacing this with redux for sanity's sake
-
-    //add something to the basket
-    function addToBasket(itemToAdd) {
-        //adding an error as the third argument is causing both to show up onSuccess.
-        //probably just missing something 
-        addLineItem(itemToAdd, successToast(`${itemToAdd.name} was added to your basket`))
-        dispatch(
-            addItem({
-                id: nanoid(),
-                ...itemToAdd
-            })
-        )
-    }
-
-    const expirationTime = useSelector( state =>
-        state.basket.expirationTime
-        )
-
-    const basket = useSelector( state =>
+    const basket = useSelector(state =>
         state.basket.contents
-        )
+    )
+
+    //there should be some sort of useEffect that checks for cards that were reserved by this user and includes them in the basket
+    //maybe just grabbing what's in localStorage
+    useEffect(() => {
+        let storedBasket = localStorage.getItem('basket')
+        if (!storedBasket) return null
+        if (basket != storedBasket) {
+            console.log('there are stored items that are not currently visible in the basket')
+            console.log(JSON.parse(storedBasket))
+            //replace basket with one from localstorage
+            dispatch(
+                replaceBasket(JSON.parse(storedBasket))
+            )
+        }
+    }, [])
 
     function clearCart() {
+        //todo: handle this in redux
         console.log('clear the cart')
     }
 
-    function removeItemFromBasket(itemToRemove) {
+    //add something to the basket
+    async function addToBasket(itemToAdd) {
+        //this will create a line item in the db and add the inventory id to the reserved cards list
+        let itemUrl = await addLineItem(
+            itemToAdd,
+            () => successToast(`${itemToAdd.name} has been succesfully reserved.  It will remain reserved until you remove it or you are logged out.`),
+            () => errorToast(`Something went wrong and ${itemToAdd} was not reserved sucessfully.`))
+        // this will add the item to the cart 
+        // the cart contents are where we are holding the url to remove the item, so we want to save that to local storage
+        dispatch(
+            addItem({
+                id: nanoid(),
+                ...itemToAdd,
+                url: itemUrl
+            })
+        )
 
+        //handle the localstorage
+        let newItem = { ...itemToAdd, url: itemUrl }
+        //unsuprisingly, this is causing some duplicated items in the localstorage basket
+        let newBasket = [...basket, newItem]
+        localStorage.setItem('basket', JSON.stringify(newBasket))
+    }
+
+    function removeItemFromBasket(itemToRemove) {
+        removeLineitem(
+            itemToRemove,
+            () => successToast(`${itemToRemove.name} has been released from your reservation.  It is now available for others to reserve.`),
+            () => errorToast(`Something went wrong. ${itemToRemove.name} was not able to be released.`)
+        )
         dispatch(
             removeItem({
                 id: nanoid(),
                 ...itemToRemove
             })
         )
+
+        //handle the localstorage
+        //get the basket from local storage and parse it
+        let oldBasket = localStorage.getItem('basket')
+        let editableBasket
+        if (oldBasket) {
+            editableBasket = JSON.parse(oldBasket)
+        }
+        //adjust the basket to remove the item in question
+        let newBasket = editableBasket.filter((item) => item.inventory_id != itemToRemove.inventory_id)
+        //set the local storage with a new basket with the item removed
+        localStorage.setItem('basket', JSON.stringify(newBasket))
     }
 
     return (

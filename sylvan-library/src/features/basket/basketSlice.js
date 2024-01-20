@@ -12,9 +12,12 @@ export const basketSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
+      //add the item to the basket
       state.contents.push(action.payload)
       //update the value whenever an item is added
       state.value = cartTotal(state.contents)
+      //handle reservedCards list changes
+      state.reservedCards.push(action.payload.inventory_id)
     },
     removeItem: (state, action) => {
       state.contents = state.contents.filter((item) => item.inventory_id != action.payload.inventory_id)
@@ -24,9 +27,14 @@ export const basketSlice = createSlice({
       }
       //update the value whenever an item is removed
       if (state.contents.length) state.value = cartTotal(state.contents)
+      //update the reserved cards list with one item
+      state.reservedCards = state.reservedCards.filter((item) => item != action.payload.inventory_id)
     },
     updateReservedCards: (state, action) => {
       state.reservedCards = action.payload
+    },
+    replaceBasket: (state, action) => {
+      state.contents = action.payload
     }
   //todo: add this functionality back
     // clearCart: () => {
@@ -38,6 +46,6 @@ export const basketSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addItem, removeItem, clearCart, updateReservedCards } = basketSlice.actions
+export const { addItem, removeItem, clearCart, updateReservedCards, addItemToReservedCards,replaceBasket } = basketSlice.actions
 
 export default basketSlice.reducer
