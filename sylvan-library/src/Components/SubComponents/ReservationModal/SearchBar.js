@@ -5,7 +5,6 @@ import { useState } from 'react'
 import Result from './Result'
 import { ECHO_TOKEN } from '../../../AppConstants'
 import { useSelector } from 'react-redux'
-import getReservedCardsList from '../../../apiActions/getReservedCardsList'
 
 export default function SearchBar({addToBasket}) {
 
