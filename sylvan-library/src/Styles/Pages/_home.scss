@@ -1,6 +1,8 @@
 @import '../variables';
 
 .home {
+    //we need to replace this with something we're allowed to use.
+    //do something with ai art as a placeholder, celebration for beta will be commissioning art
     background-image: url('https://cdna.artstation.com/p/assets/covers/images/000/825/200/large/yeong-hao-han-144455-sylvanlibrary-lr.jpg?1433915846');
     width: 100vw;
     height: 100vh;
@@ -20,7 +22,15 @@
         background-color: rgb(17 17 17 / 30%);
     }
 
-    .btn {
+    .btn{
+        border-radius: 90pt;
+        background-color: $reserveColor;
+        border-color: white;
+        font-family: noto-serif;
+        transition: all .5s ease-in-out;
+    }
+
+    .megaButton {
         width: 70vw;
         height: 12rem;
         font-size: 50pt;
@@ -35,5 +45,27 @@
     .btn:hover{
         background-color: $reservationHover;
         transform: scale(1.005)
+    }
+
+    .full-screen-loader{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .hero-text-upshift{
+        color: black;
+        font-size: 80pt;
+        position: absolute;
+        top: 5vh;
+        left: 0;
+        right: 0;
+        font-weight: 900;
+        -webkit-text-stroke-width: 3px;
+        -webkit-text-stroke-color: rgb(255, 255, 255);
+        font-family: Noto-serif;
+        background-color: rgb(17 17 17 / 30%);
+        // width: 100%;
     }
 }

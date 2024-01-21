@@ -1,12 +1,32 @@
 //The home route.  This app is very simple, so this is mostly what the average user will see.
-import { Button, Modal } from 'react-bootstrap'
-import { useState } from 'react'
-import ReservationModal from '../Components/ReservationModal'
-import CreateUserForm from '../Components/UserAuth/CreateUserForm'
-import LoginForm from '../Components/UserAuth/LoginForm'
-import { ECHO_TOKEN } from '../AppConstants'
-import get from '../apiActions/get'
-import getReservedCardsList from '../apiActions/getReservedCardsList'
+import { Button, Spinner } from 'react-bootstrap';
+import { useState } from 'react';
+import ReservationModal from '../Components/ReservationModal';
+import ReservationViewer from '../Components/ReservationViewer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+
+/* 
+some dummy data
+*/
+const reservations = [
+    {
+        "url": "http://127.0.0.1:8000/reservation/1/",
+        "id_user": 0,
+        "return_date": "2024-01-21T01:22:45-05:00",
+        "date_created": null,
+        "last_updated": null,
+        "stage": "Approved"
+    },
+    // {
+    //     "url": "http://127.0.0.1:8000/reservation/2/",
+    //     "id_user": 0,
+    //     "return_date": "2024-01-21T01:22:45-05:00",
+    //     "date_created": null,
+    //     "last_updated": null,
+    //     "stage": "Delivered"
+    // }
+]
 
 export default function Home() {
 
@@ -15,35 +35,44 @@ export default function Home() {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    const [showForm, setShowForm] = useState(false)
-    const handleShowForm = () => setShowForm(true)
-    const handleCloseForm = () => setShowForm(false)
+    //some useEffect that goes and gets the reservations for the current user
+    //this will return the reservations array
 
-    const request = async () => {
-        const endpoint = `http://127.0.0.1:8000/lineitem/`;
-        const res = await fetch(endpoint)
-        const data = await res.json();
-        //we probably want to filter these search results according to outstanding inventory ids that are not available, that way we're not showing stuff that isn't available
-        //this process will actively require us to have the backend running and hooked up correctly.
-        // if (data.status != 'error') {
-        //     setSearchResults(data.items)
-        // }
-        return data;
-    } 
+    //store if there are reservations in a sane variable to check against
+    let openReservations = reservations && reservations.length
+
+    let reservationsPending = false  //dummy data, don't keep this
+
+    //show a loader while we're getting information about this currentUser's reservations
+    if (reservationsPending) {
+        return (
+            <div className='home'>
+                <div className='full-screen-loader'>
+                    <FontAwesomeIcon icon={faCircleNotch} spin size='7x' color='white' />
+                </div>
+            </div>
+        )
+    }
+
+    //if the reservations array is empty, this component should be rendered
+    if (!openReservations) {
+        return (
+            <div className='home'>
+                <div className='hero-text'>Sylvan Library</div>
+                <Button className='megaButton' onClick={() => handleShow()}>Reserve Cards</Button>
+                <ReservationModal show={show} handleClose={handleClose} />
+            </div>
+        )
+    }
+
 
     return (
         <div className='home'>
-            <div className='hero-text'>Sylvan Library</div>
-            <Button onClick={() => handleShow()}>Reserve Cards</Button>
-            <ReservationModal show={show} handleClose={handleClose} />
-            {/* <Modal show={showForm} handleClose={handleCloseForm} size='lg'>
-                <Modal.Header>
-                    Authentication
-                </Modal.Header>
-                <Modal.Body>
-                    <CreateUserForm />
-                </Modal.Body>
-            </Modal> */}
+            <div className='full-screen-loader'>
+                <ReservationViewer
+                    reservations={reservations}
+                />
+            </div>
         </div>
     )
 }

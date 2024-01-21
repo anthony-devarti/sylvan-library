@@ -1,0 +1,81 @@
+.reservation-viewer {
+
+    .reservation-card-container {
+
+        display: flex;
+        flex-direction: column;
+        align-items: space-around;
+        justify-content: space-around;
+        color: white;
+
+        .reservation-card {
+            margin: 1rem;
+            width: 80vw;
+
+            .btn {
+                padding: 0;
+                margin: 0;
+                height: min-content;
+                width: 40%;
+                font-size: large;
+                padding: 1rem;
+
+            }
+
+            .info-row {
+                padding-top: 1rem;
+
+                .widget {
+                    background-color: rgba(87, 86, 86, 0.8);
+                    margin: 1rem;
+                    border-radius: 20pt;
+                    padding: 2rem;
+                }
+            }
+
+            .notification {
+                position: absolute;
+                top: -5%;
+                right: -2%;
+                color: #fff;
+                padding: 10px;
+                border-radius: 50%;
+                height: 50px;
+                width: 50px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .danger {
+                background-color: red;
+            }
+
+            .warning {
+                background-color: gold;
+            }
+        }
+
+        .reservation-switcher {
+            display: flex;
+            flex-direction: row;
+            margin: 1rem;
+            justify-content: space-around;
+        }
+    }
+
+    .mini-reservation-button {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        width: 100px !important;
+        height: 100px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .next-button {
+        position: relative;
+        padding: 1rem;
+    }
+
+}

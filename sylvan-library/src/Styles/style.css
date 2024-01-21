@@ -77,6 +77,106 @@
   transform: scale(1.01);
 }
 
+.reservation-viewer .reservation-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  justify-content: space-around;
+  color: white;
+}
+.reservation-viewer .reservation-card-container .reservation-card {
+  margin: 1rem;
+  width: 80vw;
+}
+.reservation-viewer .reservation-card-container .reservation-card .btn {
+  padding: 0;
+  margin: 0;
+  height: -moz-min-content;
+  height: min-content;
+  width: 40%;
+  font-size: large;
+  padding: 1rem;
+}
+.reservation-viewer .reservation-card-container .reservation-card .info-row {
+  padding-top: 1rem;
+}
+.reservation-viewer .reservation-card-container .reservation-card .info-row .widget {
+  background-color: rgba(87, 86, 86, 0.8);
+  margin: 1rem;
+  border-radius: 20pt;
+  padding: 2rem;
+}
+.reservation-viewer .reservation-card-container .reservation-card .notification {
+  position: absolute;
+  top: -5%;
+  right: -2%;
+  color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.reservation-viewer .reservation-card-container .reservation-card .danger {
+  background-color: red;
+}
+.reservation-viewer .reservation-card-container .reservation-card .warning {
+  background-color: gold;
+}
+.reservation-viewer .reservation-card-container .reservation-switcher {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  justify-content: space-around;
+}
+.reservation-viewer .mini-reservation-button {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: 100px !important;
+  height: 100px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reservation-viewer .next-button {
+  position: relative;
+  padding: 1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 70px;
+  background-color: gray;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 2px solid black;
+}
+.progress-bar .node {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-clip-path: polygon(85% 0%, 100% 50%, 85% 100%, 0% 100%, 15% 50%, 0% 0%);
+          clip-path: polygon(85% 0%, 100% 50%, 85% 100%, 0% 100%, 15% 50%, 0% 0%);
+  margin-left: -3.6%;
+  width: 100%;
+}
+.progress-bar .node:first-of-type {
+  -webkit-clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+          clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+}
+.progress-bar .active {
+  background-color: #528b3a;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+.progress-bar .completed {
+  opacity: 0.6;
+  background-color: rgb(53, 51, 51);
+  color: gray;
+}
+
 .home {
   background-image: url("https://cdna.artstation.com/p/assets/covers/images/000/825/200/large/yeong-hao-han-144455-sylvanlibrary-lr.jpg?1433915846");
   width: 100vw;
@@ -96,6 +196,13 @@
   background-color: rgba(17, 17, 17, 0.3);
 }
 .home .btn {
+  border-radius: 90pt;
+  background-color: #962c6a;
+  border-color: white;
+  font-family: noto-serif;
+  transition: all 0.5s ease-in-out;
+}
+.home .megaButton {
   width: 70vw;
   height: 12rem;
   font-size: 50pt;
@@ -109,4 +216,23 @@
 .home .btn:hover {
   background-color: #70194d;
   transform: scale(1.005);
+}
+.home .full-screen-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.home .hero-text-upshift {
+  color: black;
+  font-size: 80pt;
+  position: absolute;
+  top: 5vh;
+  left: 0;
+  right: 0;
+  font-weight: 900;
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: rgb(255, 255, 255);
+  font-family: Noto-serif;
+  background-color: rgba(17, 17, 17, 0.3);
 }/*# sourceMappingURL=style.css.map */
