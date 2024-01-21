@@ -32,6 +32,26 @@
                     padding: 2rem;
                 }
             }
+
+            .notification {
+                position: absolute;
+                top: -5%;
+                right: -2%;
+                color: #fff;
+                padding: 10px;
+                border-radius: 50%;
+                height: 50px;
+                width: 50px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .danger {
+                background-color: red;
+            }
+
+            .warning {
+                background-color: gold;
+            }
         }
 
         .reservation-switcher {

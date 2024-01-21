@@ -106,6 +106,23 @@
   border-radius: 20pt;
   padding: 2rem;
 }
+.reservation-viewer .reservation-card-container .reservation-card .notification {
+  position: absolute;
+  top: -5%;
+  right: -2%;
+  color: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.reservation-viewer .reservation-card-container .reservation-card .danger {
+  background-color: red;
+}
+.reservation-viewer .reservation-card-container .reservation-card .warning {
+  background-color: gold;
+}
 .reservation-viewer .reservation-card-container .reservation-switcher {
   display: flex;
   flex-direction: row;

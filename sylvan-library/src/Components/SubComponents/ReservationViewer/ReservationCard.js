@@ -18,6 +18,7 @@ import { openReservationMessages } from '../../../AppConstants';
 import dateTimeFormatter from '../../../utilities/dateTimeFormatter';
 import calculateTimeDifference from '../../../utilities/calculateTimeDifference';
 import { useState } from 'react';
+import NotificationFlag from './NotificationFlag';
 
 export default function ReservationCard({ reservation }) {
     //unique modal to view cards in the current reservation
@@ -26,7 +27,7 @@ export default function ReservationCard({ reservation }) {
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
     const ReviewCardsModal = () => {
         return (
             <Modal show={show} onHide={handleClose}>
@@ -44,9 +45,12 @@ export default function ReservationCard({ reservation }) {
     }
 
 
-    const actionRequired = false //dummy data, delete this line
+    const actionRequired = true //dummy data, delete this line
     //actionRequired should come from the backend, and it makes sense that it would be coming from the reservation
-    
+
+    const defaultState = false //dummy data, delete this line
+    //default state should come from the backend, probably also from the reservation modal
+
     if (actionRequired) {
         // console.log(actionRequired)
     }
@@ -72,10 +76,10 @@ export default function ReservationCard({ reservation }) {
         case 'Returned':
             message = openReservationMessages.returned
             break;
-
         default:
             break;
     }
+
 
 
     return (
@@ -91,7 +95,15 @@ export default function ReservationCard({ reservation }) {
                 </h1>
             </Card.Header>
             <Card.Body>
+                {/* this section handles notifications if necessary  */}
+                {actionRequired &&
+                    <NotificationFlag notiType={'warning'} mousoverMessage={'Action is required for your reservation to progress.'}/>
+                }
+                {defaultState &&
+                    <NotificationFlag notiType={'danger'} mousoverMessage={'Something serious'}/>
+                }
                 <Card.Title> <ReservationProgressBar stage={reservation.stage} /></Card.Title>
+                {/* end of notificaiton section  */}
                 <Card.Text>
                     <Row>
                         <Col>
