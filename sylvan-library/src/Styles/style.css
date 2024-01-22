@@ -178,7 +178,7 @@
 }
 
 .home {
-  background-image: url("https://cdna.artstation.com/p/assets/covers/images/000/825/200/large/yeong-hao-han-144455-sylvanlibrary-lr.jpg?1433915846");
+  background-image: url('../../public/sylvanLibrary.png');
   width: 100vw;
   height: 100vh;
   background-repeat: no-repeat;
