@@ -16,7 +16,7 @@ const reservations = [
         "return_date": "2024-01-21T01:22:45-05:00",
         "date_created": null,
         "last_updated": null,
-        "stage": "Approved"
+        "stage": "Borrowed"
     },
     // {
     //     "url": "http://127.0.0.1:8000/reservation/2/",
@@ -54,25 +54,26 @@ export default function Home() {
         )
     }
 
-    //if the reservations array is empty, this component should be rendered
-    if (!openReservations) {
+    //the most common view will be the ReservationViewer
+    if (openReservations) {
         return (
             <div className='home'>
-                <div className='hero-text'>Sylvan Library</div>
-                <Button className='megaButton' onClick={() => handleShow()}>Reserve Cards</Button>
-                <ReservationModal show={show} handleClose={handleClose} />
+                <div className='full-screen-loader'>
+                    <ReservationViewer
+                        reservations={reservations}
+                    />
+                </div>
             </div>
         )
     }
 
 
+    //the default view should be the no reservation view
     return (
         <div className='home'>
-            <div className='full-screen-loader'>
-                <ReservationViewer
-                    reservations={reservations}
-                />
-            </div>
+            <div className='hero-text'>Sylvan Library</div>
+            <Button className='megaButton' onClick={() => handleShow()}>Reserve Cards</Button>
+            <ReservationModal show={show} handleClose={handleClose} />
         </div>
     )
 }
