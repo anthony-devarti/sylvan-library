@@ -35,14 +35,17 @@
 
             .notification {
                 position: absolute;
-                top: -5%;
-                right: -2%;
+                top: -2rem;
+                right: -2rem;
                 color: #fff;
                 padding: 10px;
                 border-radius: 50%;
-                height: 50px;
-                width: 50px;
+                height: 4rem;
+                aspect-ratio: 1/1;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             .danger {

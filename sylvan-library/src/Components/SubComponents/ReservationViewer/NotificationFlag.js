@@ -27,9 +27,9 @@ export default function NotificationFlag({ notiType, mousoverMessage }) {
         >
             <div className={`notification ${type}`}>
                 {type == 'danger' ?
-                    <FontAwesomeIcon icon={faExclamation} />
+                    <FontAwesomeIcon icon={faExclamation} size='2x'/>
                     :
-                    <FontAwesomeIcon icon={faBolt} />
+                    <FontAwesomeIcon icon={faBolt} size='2x'/>
                 }
             </div>
         </OverlayTrigger>
