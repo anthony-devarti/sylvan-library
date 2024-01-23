@@ -8,8 +8,9 @@ import { addItem, removeItem, replaceBasket, } from '../features/basket/basketSl
 import AvailabilityCheck from '../utilities/AvailabilityCheck';
 import addLineItem from '../apiActions/addLineItem';
 import removeLineitem from '../apiActions/removeLineItem';
-import { errorToast, successToast } from './SubComponents/Toastify';
+import { errorToast, infoToast, successToast } from './SubComponents/Toastify';
 import cartTotal from '../utilities/cartTotal';
+import checkPendingReservations from '../apiActions/checkPendingReservations';
 
 export default function ReservationModal({ show, handleClose }) {
 
@@ -19,14 +20,12 @@ export default function ReservationModal({ show, handleClose }) {
         state.basket.contents
     )
 
-    //there should be some sort of useEffect that checks for cards that were reserved by this user and includes them in the basket
-    //maybe just grabbing what's in localStorage
     useEffect(() => {
+        //handle cart details from local storage.
         let storedBasket = localStorage.getItem('basket')
         if (!storedBasket) return null
         if (basket != storedBasket) {
-            console.log('there are stored items that are not currently visible in the basket')
-            console.log(JSON.parse(storedBasket))
+            // console.log('there are stored items that are not currently visible in the basket')
             //replace basket with one from localstorage
             dispatch(
                 replaceBasket(JSON.parse(storedBasket))

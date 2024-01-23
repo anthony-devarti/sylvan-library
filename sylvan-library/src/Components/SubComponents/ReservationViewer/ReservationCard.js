@@ -97,14 +97,14 @@ export default function ReservationCard({ reservation }) {
             <Card.Body>
                 {/* this section handles notifications if necessary  */}
                 {actionRequired &&
-                    <NotificationFlag notiType={'warning'} mousoverMessage={'Action is required for your reservation to progress.'}/>
+                    <NotificationFlag notiType={'warning'} mousoverMessage={'Action is required for your reservation to progress.'} />
                 }
                 {defaultState &&
-                    <NotificationFlag notiType={'danger'} mousoverMessage={'Something serious'}/>
+                    <NotificationFlag notiType={'danger'} mousoverMessage={'Something serious'} />
                 }
                 <Card.Title> <ReservationProgressBar stage={reservation.stage} /></Card.Title>
                 {/* end of notificaiton section  */}
-                <Card.Text>
+                <Card.Body>
                     <Row>
                         <Col>
                             {message}
@@ -116,20 +116,26 @@ export default function ReservationCard({ reservation }) {
                         </Col>
                         <Col className='widget'>
                             <table style={{ width: '100%' }}>
-                                <th style={{ fontWeight: 'normal' }}>Return Due:</th>
-                                <th style={{ fontWeight: 'normal', textAlign: 'right' }}>{dateTimeFormatter(reservation.return_date)}</th>
-                                <tr>
-                                    <td>
-                                        Return in:
-                                    </td>
-                                    <td style={{ textAlign: 'right' }}>
-                                        {calculateTimeDifference(reservation.return_date)}
-                                    </td>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th style={{ fontWeight: 'normal' }}>Return Due:</th>
+                                        <th style={{ fontWeight: 'normal', textAlign: 'right' }}>{dateTimeFormatter(reservation.return_date)}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Return in:
+                                        </td>
+                                        <td style={{ textAlign: 'right' }}>
+                                            {calculateTimeDifference(reservation.return_date)}
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </Col>
                     </Row>
-                </Card.Text>
+                </Card.Body>
                 <Card.Footer>
                     <Row>
                         <Col>

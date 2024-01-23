@@ -3,12 +3,7 @@ This component is designed to replace the default view if the user has open rese
 This should change what is visible on the homepage directly, and include a ReservationCard for each reservation.
 This will be rendered on the home page based on available reservations, so the reservations present will already be available if this is being rendered
 
-Reservations passed to this should be an array of objects
-
-Change the plan here, it should assume there is one reservation with full details, 
-and the second reservation should be assumed to be an exception and might need to be handled 
-some other way like a carousel or some other switcher mechanism
-
+Reservations passed to this should be an array of reservation objects
 
 */
 
