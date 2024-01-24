@@ -3,10 +3,11 @@ import { Button } from 'react-bootstrap'
 
 export default function Results({item, addToBasket}) {
 
+
     return (
         <div className="result">
             <div>
-                <img src={item.image} style={{maxWidth:'10vw'}}/>
+                <img src={item.image} alt='card' style={{maxWidth:'10vw'}}/>
             </div>
             <div>
                 {item.name}

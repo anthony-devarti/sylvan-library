@@ -1,16 +1,15 @@
 import { Modal, Button, Row, Col, Container } from 'react-bootstrap';
 import SearchBar from './SubComponents/ReservationModal/SearchBar';
 import Basket from './SubComponents/ReservationModal/Basket';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { addItem, removeItem, replaceBasket, } from '../features/basket/basketSlice'
 import AvailabilityCheck from '../utilities/AvailabilityCheck';
 import addLineItem from '../apiActions/addLineItem';
 import removeLineitem from '../apiActions/removeLineItem';
-import { errorToast, infoToast, successToast } from './SubComponents/Toastify';
-import cartTotal from '../utilities/cartTotal';
-import checkPendingReservations from '../apiActions/checkPendingReservations';
+import { errorToast, successToast } from './SubComponents/Toastify';
+import ReservationDetailsForm from './SubComponents/ReservationModal/ReservationDetailsForm';
 
 export default function ReservationModal({ show, handleClose }) {
 
@@ -18,6 +17,10 @@ export default function ReservationModal({ show, handleClose }) {
 
     const basket = useSelector(state =>
         state.basket.contents
+    )
+
+    const currentReservation = useSelector(state =>
+        state.basket.openReservation
     )
 
     useEffect(() => {
@@ -40,20 +43,26 @@ export default function ReservationModal({ show, handleClose }) {
 
     //add something to the basket
     async function addToBasket(itemToAdd) {
+
+        const onSuccess = () => {
+            () => successToast(`${itemToAdd.name} has been succesfully reserved.  It will remain reserved until you remove it or you are logged out.`);
+            // this will add the item to the cart
+            // it is intentionally kept in the onSuccess function so it does not add the item to the cart if the addLineItem call fails  
+            dispatch(
+                addItem({
+                    id: nanoid(),
+                    ...itemToAdd,
+                    url: itemUrl
+                })
+            )
+        }
         //this will create a line item in the db and add the inventory id to the reserved cards list
         let itemUrl = await addLineItem(
             itemToAdd,
-            () => successToast(`${itemToAdd.name} has been succesfully reserved.  It will remain reserved until you remove it or you are logged out.`),
+            currentReservation,
+            onSuccess,
             () => errorToast(`Something went wrong and ${itemToAdd} was not reserved sucessfully.`))
-        // this will add the item to the cart 
-        // the cart contents are where we are holding the url to remove the item, so we want to save that to local storage
-        dispatch(
-            addItem({
-                id: nanoid(),
-                ...itemToAdd,
-                url: itemUrl
-            })
-        )
+        
 
         //handle the localstorage
         let newItem = { ...itemToAdd, url: itemUrl }
@@ -110,6 +119,14 @@ export default function ReservationModal({ show, handleClose }) {
                         </Col>
                         <Col className='basket' xs xl={3}>
                             <Basket contents={basket} removeItemFromBasket={removeItemFromBasket} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col><h1>Delivery Details</h1></Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <ReservationDetailsForm />
                         </Col>
                     </Row>
                 </Container>

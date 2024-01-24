@@ -11,12 +11,8 @@ import axios from 'axios';
 
 export default function addLineItem(item, reservationID, onSuccess, onFailure) {
 
-    let result = ''
-
     return axios.post('lineitem/', {
-        //it's ok that this is 0, because there is no reservation to attach it to, yet.
-        //the card is held, but just floating out there without a 'reservation' yet.
-        //change this:  we're creating a reservation and passing that information along
+        //the reservationID here comes from redux state
         id_reservation: reservationID,
         //hold means that the item is held by a user, perhaps by putting it in their basket
         hold: true,
