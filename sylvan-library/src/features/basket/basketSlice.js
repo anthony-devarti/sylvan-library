@@ -45,7 +45,6 @@ export const basketSlice = createSlice({
       if (pendingReservations.length > 1) {
         console.error('Somehow, this user has multiple pending reservations.  This should not happen')
       }
-      console.log(pendingReservations)
       if (pendingReservations.length && pendingReservations.length == 1){
         state.openReservation = pendingReservations[0].id
       }

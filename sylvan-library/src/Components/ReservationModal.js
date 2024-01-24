@@ -45,7 +45,7 @@ export default function ReservationModal({ show, handleClose }) {
     async function addToBasket(itemToAdd) {
 
         const onSuccess = () => {
-            () => successToast(`${itemToAdd.name} has been succesfully reserved.  It will remain reserved until you remove it or you are logged out.`);
+            successToast(`${itemToAdd.name} has been succesfully reserved.  It will remain reserved until you remove it or you are logged out.`);
             // this will add the item to the cart
             // it is intentionally kept in the onSuccess function so it does not add the item to the cart if the addLineItem call fails  
             dispatch(
