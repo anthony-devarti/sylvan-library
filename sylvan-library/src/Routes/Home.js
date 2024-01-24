@@ -1,5 +1,5 @@
 //The home route.  This app is very simple, so this is mostly what the average user will see.
-import { Button, Spinner } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import ReservationModal from '../Components/ReservationModal';
 import ReservationViewer from '../Components/ReservationViewer';
@@ -48,19 +48,19 @@ export default function Home() {
                 if (!data.length) {
                     console.log('there are no reservations')
                     //if the user does not have one, create one.
+                    //this is creating 2 reservations
+                    //this is happening because the home component is re-rendering.
+                    //maybe this needs to go one component
                     createReservation(userID)
                 }
                 setReservationsPending(false)
             } catch (error) {
                 console.error('Error:', error);
-                // Handle the error
                 setReservationsPending(false)
             }
         };
         fetchData()
-
-
-    }, [dispatch])
+    }, [userID])
 
     //store if there are reservations in a sane variable to check against
     let openReservations = reservations.filter((reservation) => reservation.stage != 1)
@@ -98,7 +98,6 @@ export default function Home() {
             <div className='hero-text'>Sylvan Library</div>
             <Button className='megaButton' onClick={() => handleShow()}>Reserve Cards</Button>
             <ReservationModal show={show} handleClose={handleClose} />
-            <Button onClick={() => createReservation(11)}>Test</Button>
         </div>
     )
 }

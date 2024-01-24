@@ -10,7 +10,6 @@ onComplete : function | what to do when the call completes, success or failure |
 */
 
 import axios from "axios";
-import { baseURL } from "../AppConstants";
 import endpointDummyProofer from "./endpointDummyProofer";
 
 export default function get(endpoint, onSuccess, onFailure, onComplete){

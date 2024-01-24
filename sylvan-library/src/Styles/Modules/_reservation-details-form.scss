@@ -1,0 +1,53 @@
+@import '../variables';
+
+.reservation-form {
+    // max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
+    .left-form{
+        width: 40%;
+    }
+
+    .right-form{
+        width: 40%;
+        padding-top: 5rem;
+    }
+  
+    .form-group {
+      margin-bottom: 20px;
+  
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+  
+      textarea,
+      select,
+      input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border-radius: 10px;
+      }
+  
+      .error-message {
+        color: red;
+        margin-top: 5px;
+      }
+    }
+  
+    .submit-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+    }
+  }
+  
