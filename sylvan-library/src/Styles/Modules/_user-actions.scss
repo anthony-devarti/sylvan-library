@@ -1,0 +1,17 @@
+@import '../variables';
+
+.user-actions{
+    padding: 1rem;
+    display: flex;
+    align-items: start;
+    flex-direction: row-reverse;
+
+    .user-button{
+        cursor: pointer;
+        transition: scale .2s;
+    }
+
+    .user-button:hover{
+        scale: 1.1;
+    }
+}

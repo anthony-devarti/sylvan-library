@@ -9,6 +9,7 @@ import getReservations from '../apiActions/checkPendingReservations';
 import { useDispatch, useSelector } from 'react-redux';
 import { setReservations } from '../features/basket/basketSlice';
 import createReservation from '../apiActions/createReservation';
+import UserWidget from '../Components/UserAuth/UserWidget';
 
 export default function Home() {
 
@@ -32,34 +33,37 @@ export default function Home() {
     //some useEffect that goes and gets the reservations for the current user
     //this will return the reservations array
     useEffect(() => {
-        //just go get the active reservations
-        const fetchData = async () => {
-            setReservationsPending(true)
-            try {
-                //obviously the user is hardCoded as 0 right now.
-                const data = await getReservations(userID);
-                if (data) {
-                    //if the user has an existing reservation, store that id_reservation to state
-                    dispatch(
-                        setReservations(data)
-                    )
+        //don't bother getting this if the user isn't logged in.
+        if (userID) {
+            //just go get the active reservations
+            const fetchData = async () => {
+                setReservationsPending(true)
+                try {
+                    //obviously the user is hardCoded as 0 right now.
+                    const data = await getReservations(userID);
+                    if (data) {
+                        //if the user has an existing reservation, store that id_reservation to state
+                        dispatch(
+                            setReservations(data)
+                        )
+                    }
+                    //if there are no reservations
+                    if (!data.length) {
+                        console.log('there are no reservations')
+                        //if the user does not have one, create one.
+                        //this is creating 2 reservations
+                        //this is happening because the home component is re-rendering.
+                        //maybe this needs to go one component
+                        createReservation(userID)
+                    }
+                    setReservationsPending(false)
+                } catch (error) {
+                    console.error('Error:', error);
+                    setReservationsPending(false)
                 }
-                //if there are no reservations
-                if (!data.length) {
-                    console.log('there are no reservations')
-                    //if the user does not have one, create one.
-                    //this is creating 2 reservations
-                    //this is happening because the home component is re-rendering.
-                    //maybe this needs to go one component
-                    createReservation(userID)
-                }
-                setReservationsPending(false)
-            } catch (error) {
-                console.error('Error:', error);
-                setReservationsPending(false)
-            }
-        };
-        fetchData()
+            };
+            fetchData()
+        }
     }, [userID])
 
     //store if there are reservations in a sane variable to check against
@@ -82,6 +86,7 @@ export default function Home() {
     if (thereAreOpenReservations) {
         return (
             <div className='home'>
+                <UserWidget />
                 <div className='full-screen-loader'>
                     <ReservationViewer
                         reservations={reservations}
@@ -95,6 +100,7 @@ export default function Home() {
     //the default view should be the no reservation view
     return (
         <div className='home'>
+            <UserWidget />
             <div className='hero-text'>Sylvan Library</div>
             <Button className='megaButton' onClick={() => handleShow()}>Reserve Cards</Button>
             <ReservationModal show={show} handleClose={handleClose} />
