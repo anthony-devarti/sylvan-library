@@ -229,6 +229,20 @@
   border-radius: 10px;
 }
 
+.user-actions {
+  padding: 1rem;
+  display: flex;
+  align-items: start;
+  flex-direction: row-reverse;
+}
+.user-actions .user-button {
+  cursor: pointer;
+  transition: scale 0.2s;
+}
+.user-actions .user-button:hover {
+  scale: 1.1;
+}
+
 .home {
   background-image: url("../../public/sylvanLibrary.png");
   width: 100vw;

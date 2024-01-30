@@ -4,14 +4,14 @@ It functions as a method of logging in, creating a new user, or viewing the info
 User functionality should be a very very small footprint, so dedicating as little real estate to it as possible is ideal.
 
 props:
+children | jsx | this prop determines what is shown in the body of the 
 
 */
 
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
-export default function UserAuthModal() {
-    let userLoggedIn = true //dummy data, delete this line
-    
+export default function UserAuthModal({show, handleClose, children, title}) {
+
     return (
         <Modal
             show={show}
@@ -20,18 +20,11 @@ export default function UserAuthModal() {
             keyboard={false}
         >
             <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
+                <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                I will not close if you click outside me. Do not even try to press
-                escape key.
+                {children}
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary">Understood</Button>
-            </Modal.Footer>
         </Modal>
 
     )

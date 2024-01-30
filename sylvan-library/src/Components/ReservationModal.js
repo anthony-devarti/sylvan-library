@@ -26,7 +26,7 @@ export default function ReservationModal({ show, handleClose }) {
     useEffect(() => {
         //handle cart details from local storage.
         let storedBasket = localStorage.getItem('basket')
-        if (!storedBasket) return null
+        if (!storedBasket) return undefined
         if (basket != storedBasket) {
             // console.log('there are stored items that are not currently visible in the basket')
             //replace basket with one from localstorage
@@ -140,6 +140,20 @@ export default function ReservationModal({ show, handleClose }) {
                 <Button variant="secondary" onClick={handleClose}>
                     Nevermind
                 </Button>
+                {/* VINCE/Issue-7:  We want to start here.  the onClick is the function that's called when a user clicks on this button.
+                That means it all starts here.
+                When this button is clicked, we want a few specific things to happen:
+                First, we should be able to get the details of our open reservation from the basketSlice via useSelector(openReservation)
+                Second, we want to create an api action in the api action directory to handle this specific api call, probably should call it putSubmitReservation
+                Lastly, we want to switch over to the api so we can handle what specifically happens when this reservation is submitted.
+                    That means the backend should progress the reservation to the next stage
+                    then, I think it would make sense if the backend's 200 response included the cards that are being lent.
+                After the button is clicked, the user should see a successToast('some message') if the response is good and an errorToast('some other message') if it's not.
+
+                Tips:  
+                -This is going to involve some async functions, so you should use the other apiActions to help you.
+                -don't forget that if you want the onClick to take parameters, you want to use an arrow function so it doesn't get immediately called on render.
+                -you will be messing around in python for this because you'll probably want to expose an endpoint for a custom method on the reservations endpoint. */}
                 <Button variant="primary" onClick={handleClose}>
                     Submit Request
                 </Button>
