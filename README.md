@@ -41,3 +41,14 @@ Reservation - a collection of cards that is currently being borrowed.  Reservati
 
 ## Echo MTG integration
 This appilicaiton is designed to integrate with echoMTG's api.  I want to get this to a vaguely "working" ish state before I bug them about giving me a static access token.  Until that point, we will need to use a rotating access token that changes daily.  You will need to log in to grab that.  For everyone's convenience, the token is saved in the App Constants file, so if the token needs to be used elsewhere in the future, we can just use that variable and only have to update one thing.
+
+## Development Plan for V1
+Note that we don't have any real sprints for this, so I'm just lumping things into vague cycles.
+Cycle 1 - We plan to be able to get the reservation through the workflow correctly once, assuming the user or the lender never fuck anything up.  Notably, there may not be actual road in front of the negative choices in the ui, like if a card is lost, damaged, or not present during the handoff from lender to borrower or vice versa.  That's OK for this cycle.  We should still have error handling for when the application does something it's not supposed to, though
+Cycle 2 - Move through the workflow to include handling for something that a human being does that they're not supposed to.  Things like damaging cards, losing cards, the lender not being able to find something in inventory, forgetting something and needing to correct it immediately.  stuff like that.  This will likely modify some of the success states that we created during cycle 1
+Cycle 3 - Testing:  This is where we stress-test this puppy and try to find corner cases that we have not planned for in regards to human actions.  There's probably something that someone will want to do that we haven't thought of yet.  Also, finding bugs where the application is not doing something that we think it should.  
+Cycle 4 - V1 release:  All the bullshit that comes along with releasing something
+
+## V2 Features
+-a lender interface/dashboard that means the lender doesn't need to mess around in django admin
+-alerts for decision points
