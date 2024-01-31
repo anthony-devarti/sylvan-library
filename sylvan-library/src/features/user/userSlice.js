@@ -7,15 +7,21 @@ export const userSlice = createSlice({
     userID: null,
     userData: {},
     userStats: [],
+    csrfToken: null
   },
   reducers: {
     loginUser: (state, action) => {
-      state.userData = action.payload
-      state.userID = action.payload.id
+      if (action.payload.user) {
+        state.userData = action.payload.user
+        state.userID = action.payload.user.id
+      }
+      state.csrfToken = action.payload.csrf_token
     },
     logoutUser: (state) => {
       state.userData = {}
       state.userID = null
+      state.userStats = []
+      state.csrfToken = null
     }
   },
 })

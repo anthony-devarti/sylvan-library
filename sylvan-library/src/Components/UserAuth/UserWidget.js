@@ -55,7 +55,7 @@ export const UserWidget = () => {
             </UserAuthModal>
             {/* the details user modal, also for logging out  */}
             <UserAuthModal show={showUserModal} handleClose={handleCloseUserModal} title={'User Information'}>
-                <UserInfo />
+                <UserInfo closeModal={handleCloseUserModal}/>
             </UserAuthModal>
         </div>
     )

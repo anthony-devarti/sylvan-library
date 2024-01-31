@@ -44,10 +44,13 @@ export default function ReservationModal({ show, handleClose }) {
     //add something to the basket
     async function addToBasket(itemToAdd) {
 
-        const onSuccess = () => {
-            successToast(`${itemToAdd.name} has been succesfully reserved.  It will remain reserved until you remove it or you are logged out.`);
-            // this will add the item to the cart
-            // it is intentionally kept in the onSuccess function so it does not add the item to the cart if the addLineItem call fails  
+        //this will create a line item in the db and add the inventory id to the reserved cards list
+        let itemUrl = await addLineItem(
+            itemToAdd,
+            currentReservation
+            )
+
+        if (itemUrl && typeof itemUrl == 'string'){
             dispatch(
                 addItem({
                     id: nanoid(),
@@ -56,12 +59,6 @@ export default function ReservationModal({ show, handleClose }) {
                 })
             )
         }
-        //this will create a line item in the db and add the inventory id to the reserved cards list
-        let itemUrl = await addLineItem(
-            itemToAdd,
-            currentReservation,
-            onSuccess,
-            () => errorToast(`Something went wrong and ${itemToAdd} was not reserved sucessfully.`))
         
 
         //handle the localstorage

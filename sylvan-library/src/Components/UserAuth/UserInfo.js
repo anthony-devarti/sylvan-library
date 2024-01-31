@@ -10,7 +10,7 @@ import { errorToast, successToast } from '../SubComponents/Toastify';
 import { logoutUser } from '../../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 
-const UserInfo = () => {
+const UserInfo = ({closeModal}) => {
 
     const dispatch = useDispatch()
 
@@ -70,11 +70,16 @@ const UserInfo = () => {
     
                 // Assuming you have a function to clear local storage or perform other cleanup
                 // clearLocalStorage();
+                localStorage.setItem('user', JSON.stringify(null))
+                localStorage.setItem('csrfToken', JSON.stringify(null))
     
                 //show a toast letting them know they're logged out
                 successToast('You are logged out.  The contents of your basket have been cleared.')
 
                 //actually clear their basket now.
+
+                //close the modal
+                closeModal()
             } else {
                 // Handle error response
                 const errorData = await response.json();
@@ -92,7 +97,7 @@ const UserInfo = () => {
         <div className='user-info'>
             {userStats.map((statLine) => {
                 return (
-                    <Row>
+                    <Row key={statLine.title}>
                         <Col>
                             {statLine.title}
                         </Col>
