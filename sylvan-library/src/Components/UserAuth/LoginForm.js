@@ -47,9 +47,10 @@ export default function LoginForm() {
             successToast('Succesfully Logged In!')
             //now we need to handle some redux stuff
             if (data.user) {
-                dispatch(loginUser(data.user))
+                dispatch(loginUser(data))
                 //pop that userID in localStorage
                 localStorage.setItem('user', JSON.stringify(data.user))
+                localStorage.setItem('csrfToken', data.csrf_token)
             }
         } catch (error) {
             console.error('Error during login:', error);
