@@ -39,15 +39,16 @@ export const basketSlice = createSlice({
       state.contents = action.payload
     },
     setReservations: (state, action) => {
-      state.reservations = action.payload
+      console.log(action.payload)
+      let newReservations = action.payload
+      state.reservations = newReservations
+      let pendingReservations = newReservations.filter((reservation) => reservation.stage == "Pending" && reservation.complete == false)
       //if there is only one reservation in pending
-      let pendingReservations = state.reservations.filter((reservation) => reservation.stage == 1 && reservation.complete == false)
       if (pendingReservations.length > 1) {
         console.error('Somehow, this user has multiple pending reservations.  This should not happen')
       }
-      if (pendingReservations.length && pendingReservations.length > 1){
-        state.openReservation = pendingReservations[0].id
-      }
+      state.openReservation = pendingReservations[0].id
+      if (!pendingReservations) console.log('Somehow, there are no reservations')
     },
     //todo: add this functionality back
     // clearCart: () => {
