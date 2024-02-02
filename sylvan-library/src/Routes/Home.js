@@ -5,11 +5,13 @@ import ReservationModal from '../Components/ReservationModal';
 import ReservationViewer from '../Components/ReservationViewer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import getReservations from '../apiActions/checkPendingReservations';
+import getUnsubmittedReservations from '../apiActions/getUnsubmittedReservations';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReservations } from '../features/basket/basketSlice';
+import { setCurrentReservation, setReservations } from '../features/basket/basketSlice';
 import createReservation from '../apiActions/createReservation';
 import UserWidget from '../Components/UserAuth/UserWidget';
+import { reservationStage } from '../AppConstants';
+import getSubmittedReservations from '../apiActions/getAllReservations';
 
 export default function Home() {
 
@@ -20,30 +22,33 @@ export default function Home() {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    let reservations = useSelector(state =>
-        state.basket.reservations
-    )
-
-    let userID = useSelector(state =>
-        state.user.userID
-    )
+    let reservations = useSelector(state => state.basket.reservations)
+    let userID = useSelector(state => state.user.userID)
 
     const [reservationsPending, setReservationsPending] = useState(false)
 
     //some useEffect that goes and gets the reservations for the current user
-    //this will return the reservations array
     useEffect(() => {
         const fetchData = async () => {
             setReservationsPending(true);
 
             try {
-                const existingReservations = await getReservations(userID);
+                const unsubmittedReservations = await getUnsubmittedReservations(userID);
+                const allReservations = await getSubmittedReservations(userID);
 
-                if (existingReservations && existingReservations.length > 0) {
-                    dispatch(setReservations(existingReservations));
-                } else {
+                if (allReservations && allReservations.length) {
+                    console.log('setting reservations')
+                    dispatch(setReservations(allReservations));
+                }
+                if (unsubmittedReservations && unsubmittedReservations.length) {
+                    console.log('setting current reservation')
+                    dispatch(setCurrentReservation(unsubmittedReservations))
+                }
+
+                if (!unsubmittedReservations || !unsubmittedReservations.length) {
                     // Dispatch the createReservation thunk
-                    await dispatch(createReservation(userID));
+                    console.log('create a new reservation')
+                    createReservation(userID)(dispatch)
                 }
 
                 setReservationsPending(false);
@@ -59,7 +64,7 @@ export default function Home() {
     }, [userID]);
 
     //store if there are reservations in a sane variable to check against
-    let openReservations = reservations.filter((reservation) => reservation.stage != "Pending")
+    let openReservations = reservations.filter((reservation) => reservation.stage != reservationStage.unsubmitted)
 
     let thereAreOpenReservations = openReservations && openReservations.length > 0
 
@@ -79,11 +84,18 @@ export default function Home() {
         return (
             <div className='home'>
                 <UserWidget />
-                <div className='full-screen-loader'>
-                    <ReservationViewer
-                        reservations={reservations}
-                    />
-                </div>
+                {userID &&
+                    <div className='full-screen-loader'>
+                        <ReservationViewer
+                            reservations={reservations}
+                        />
+                    </div>
+                }
+                {!userID &&
+                    <Alert variant='warning' className='mt-1'>
+                        You must be logged in to reserve cards.
+                    </Alert>
+                }
             </div>
         )
     }
@@ -97,8 +109,8 @@ export default function Home() {
             <Button className='megaButton' disabled={!userID} onClick={() => handleShow()}>Reserve Cards</Button>
             {!userID &&
                 <Alert variant='warning' className='mt-1'>
-                You must be logged in to reserve cards.
-              </Alert>
+                    You must be logged in to reserve cards.
+                </Alert>
             }
             <ReservationModal show={show} handleClose={handleClose} />
         </div>

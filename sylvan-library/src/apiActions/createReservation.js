@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { baseURL } from '../AppConstants';
+import { baseURL, reservationStage } from '../AppConstants';
 import { errorToast, successToast } from '../Components/SubComponents/Toastify';
-import { setReservations } from '../features/basket/basketSlice';
+import { setCurrentReservation, setReservations } from '../features/basket/basketSlice';
 
 const createReservation = (userID) => async (dispatch) => {
     try {
@@ -9,16 +9,17 @@ const createReservation = (userID) => async (dispatch) => {
         "id_user": userID,
         "date_created": "2024-01-21T12:34:56",
         "return_date": "2025-01-21T12:30:45.123456",
-        "action_required": 1
+        "action_required": 1,
+        "stage" : reservationStage.unsubmitted
       });
   
       // Assuming the response.data has the necessary reservation information
       const newReservation = response.data;
   
-      successToast('New reservation created');
+      successToast('Reservation is ready');
       
       // Dispatch the new reservation data to the Redux store
-      dispatch(setReservations([newReservation]));
+      dispatch(setCurrentReservation([newReservation]));
   
       // Return the newReservation for potential further use
       return newReservation;
@@ -28,6 +29,7 @@ const createReservation = (userID) => async (dispatch) => {
       throw error; // Re-throw the error so that the calling code can handle it if needed
     }
   };
+
 
 
 export default createReservation

@@ -10,7 +10,9 @@ import addLineItem from '../apiActions/addLineItem';
 import removeLineitem from '../apiActions/removeLineItem';
 import { errorToast, successToast } from './SubComponents/Toastify';
 import ReservationDetailsForm from './SubComponents/ReservationModal/ReservationDetailsForm';
+import getBasketContents from '../apiActions/getBasketContents';
 import submitReservation from '../apiActions/submitReservation';
+import createReservation from '../apiActions/createReservation';
 
 /**
  * ReservationModal Component
@@ -22,21 +24,16 @@ export default function ReservationModal({ show, handleClose }) {
 
     const dispatch = useDispatch()
 
-    // Get the basket contents from Redux store
+    // get important information from the redux store
+    const currentReservation = useSelector(state => state.basket.openReservationID)
+    const currentReservationUrl = useSelector(state => state.basket.openReservationUrl)
     const basket = useSelector(state => state.basket.contents)
+    const userID = useSelector(state => state.user.userID)
 
-    // Get the current reservation details from Redux store
-    const currentReservation = useSelector(state => state.basket.openReservation)
-
+    //each time the modal appears,get the associated lineitems for the currentReservation.
     useEffect(() => {
-        // Handle cart details from local storage.
-        let storedBasket = localStorage.getItem('basket')
-        if (!storedBasket) return undefined
-        if (JSON.stringify(basket) !== storedBasket) {
-            // Replace basket with one from local storage
-            dispatch(replaceBasket(JSON.parse(storedBasket)))
-        }
-    }, [])
+        getBasketContents(currentReservation)
+    }, [show])
 
     /**
      * Clears the cart
@@ -46,58 +43,12 @@ export default function ReservationModal({ show, handleClose }) {
         console.log('clear the cart')
     }
 
-    /**
-     * Adds an item to the basket
-     * @param {Object} itemToAdd - The item to add to the basket
-     */
-    async function addToBasket(itemToAdd) {
-        // Create a line item in the db and add the inventory id to the reserved cards list
-        let itemUrl = await addLineItem(itemToAdd, currentReservation)
-
-        if (itemUrl && typeof itemUrl === 'string') {
-            // Dispatch an action to add the item to the Redux store
-            dispatch(addItem({
-                id: nanoid(),
-                ...itemToAdd,
-                url: itemUrl
-            }))
-        }
-
-        // Handle local storage
-        let newItem = { ...itemToAdd, url: itemUrl }
-        let newBasket = [...basket, newItem]
-        localStorage.setItem('basket', JSON.stringify(newBasket))
-    }
-
-    /**
-     * Removes an item from the basket
-     * @param {Object} itemToRemove - The item to remove from the basket
-     */
-    function removeItemFromBasket(itemToRemove) {
-        removeLineitem(
-            itemToRemove,
-            () => successToast(`${itemToRemove.name} has been released from your reservation. It is now available for others to reserve.`),
-            () => errorToast(`Something went wrong. ${itemToRemove.name} was not able to be released.`)
-        )
-
-        // Dispatch an action to remove the item from the Redux store
-        dispatch(removeItem({
-            id: nanoid(),
-            ...itemToRemove
-        }))
-
-        // Handle local storage
-        let oldBasket = localStorage.getItem('basket')
-        let editableBasket
-        if (oldBasket) {
-            editableBasket = JSON.parse(oldBasket)
-        }
-
-        // Adjust the basket to remove the item in question
-        let newBasket = editableBasket.filter((item) => item.inventory_id !== itemToRemove.inventory_id)
-
-        // Set the local storage with a new basket with the item removed
-        localStorage.setItem('basket', JSON.stringify(newBasket))
+    //the submit button
+    const handleSubmit = () => {
+        dispatch(submitReservation(currentReservationUrl, userID))
+        getBasketContents()
+        createReservation(userID)
+        handleClose()
     }
 
     return (
@@ -115,10 +66,10 @@ export default function ReservationModal({ show, handleClose }) {
                 <Container>
                     <Row className='reservation-modal-body'>
                         <Col xs xl={9}>
-                            <SearchBar addToBasket={addToBasket} />
+                            <SearchBar addToBasket={addLineItem} />
                         </Col>
                         <Col className='basket' xs xl={3}>
-                            <Basket contents={basket} removeItemFromBasket={removeItemFromBasket} />
+                            <Basket removeItemFromBasket={removeLineitem} />
                         </Col>
                     </Row>
                     <Row>
@@ -140,10 +91,10 @@ export default function ReservationModal({ show, handleClose }) {
                 <Button variant="secondary" onClick={handleClose}>
                     Nevermind
                 </Button>
-                <Button variant="primary" onClick={() => submitReservation(currentReservation)}>
+                <Button variant="primary" onClick={handleSubmit}>
                     Submit Request
                 </Button>
-                <AvailabilityCheck />
+                {/* <AvailabilityCheck /> */}
             </Modal.Footer>
         </Modal>
     )

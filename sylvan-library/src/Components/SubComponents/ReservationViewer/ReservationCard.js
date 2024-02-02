@@ -14,7 +14,7 @@ reservation | object | this should be an individual reservation, we're checking 
 */
 import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
 import ReservationProgressBar from './ReservationProgressBar';
-import { openReservationMessages } from '../../../AppConstants';
+import { openReservationMessages, reservationStage } from '../../../AppConstants';
 import dateTimeFormatter from '../../../utilities/dateTimeFormatter';
 import calculateTimeDifference from '../../../utilities/calculateTimeDifference';
 import { useState } from 'react';
@@ -27,6 +27,16 @@ export default function ReservationCard({ reservation }) {
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const actionRequired = true //dummy data, delete this line
+    //actionRequired should come from the backend, and it makes sense that it would be coming from the reservation
+
+    const defaultState = false //dummy data, delete this line
+    //default state should come from the backend, probably also from the reservation modal
+
+    //basic assumption checking
+    if (!reservation) return null
+    if (typeof reservation != 'object') return null
 
     const ReviewCardsModal = () => {
         return (
@@ -44,42 +54,29 @@ export default function ReservationCard({ reservation }) {
         )
     }
 
-
-    const actionRequired = true //dummy data, delete this line
-    //actionRequired should come from the backend, and it makes sense that it would be coming from the reservation
-
-    const defaultState = false //dummy data, delete this line
-    //default state should come from the backend, probably also from the reservation modal
-
-    if (actionRequired) {
-        // console.log(actionRequired)
-    }
-
-    //basic assumption checking
-    if (!reservation) return null
-    if (typeof reservation != 'object') return null
-
-
     //handle the message that appears in the card
     let message = ''
 
     switch (reservation.stage) {
-        case 'Approved':
+        case reservationStage.pending:
+            message = openReservationMessages.pending
+            break;
+        case reservationStage.approved:
             message = openReservationMessages.approved
             break;
-        case 'Delivered':
+        case reservationStage.delivered:
+            console.log('this is delivered too')
             message = openReservationMessages.delivered
             break;
-        case 'Borrowed':
+        case reservationStage.borrowed:
             message = openReservationMessages.borrowed
             break;
-        case 'Returned':
+        case reservationStage.returned:
             message = openReservationMessages.returned
             break;
         default:
             break;
     }
-
 
 
     return (
