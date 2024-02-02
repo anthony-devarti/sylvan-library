@@ -4,93 +4,99 @@ import Basket from './SubComponents/ReservationModal/Basket';
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-import { addItem, removeItem, replaceBasket, } from '../features/basket/basketSlice'
+import { addItem, removeItem, replaceBasket } from '../features/basket/basketSlice'
 import AvailabilityCheck from '../utilities/AvailabilityCheck';
 import addLineItem from '../apiActions/addLineItem';
 import removeLineitem from '../apiActions/removeLineItem';
 import { errorToast, successToast } from './SubComponents/Toastify';
 import ReservationDetailsForm from './SubComponents/ReservationModal/ReservationDetailsForm';
+import submitReservation from '../apiActions/submitReservation';
 
+/**
+ * ReservationModal Component
+ * @param {Object} props - React component props
+ * @param {boolean} props.show - Controls the visibility of the modal
+ * @param {Function} props.handleClose - Callback function to close the modal
+ */
 export default function ReservationModal({ show, handleClose }) {
 
     const dispatch = useDispatch()
 
-    const basket = useSelector(state =>
-        state.basket.contents
-    )
+    // Get the basket contents from Redux store
+    const basket = useSelector(state => state.basket.contents)
 
-    const currentReservation = useSelector(state =>
-        state.basket.openReservation
-    )
+    // Get the current reservation details from Redux store
+    const currentReservation = useSelector(state => state.basket.openReservation)
 
     useEffect(() => {
-        //handle cart details from local storage.
+        // Handle cart details from local storage.
         let storedBasket = localStorage.getItem('basket')
         if (!storedBasket) return undefined
-        if (basket != storedBasket) {
-            // console.log('there are stored items that are not currently visible in the basket')
-            //replace basket with one from localstorage
-            dispatch(
-                replaceBasket(JSON.parse(storedBasket))
-            )
+        if (JSON.stringify(basket) !== storedBasket) {
+            // Replace basket with one from local storage
+            dispatch(replaceBasket(JSON.parse(storedBasket)))
         }
     }, [])
 
+    /**
+     * Clears the cart
+     */
     function clearCart() {
-        //todo: handle this in redux
+        // TODO: Handle this in Redux
         console.log('clear the cart')
     }
 
-    //add something to the basket
+    /**
+     * Adds an item to the basket
+     * @param {Object} itemToAdd - The item to add to the basket
+     */
     async function addToBasket(itemToAdd) {
+        // Create a line item in the db and add the inventory id to the reserved cards list
+        let itemUrl = await addLineItem(itemToAdd, currentReservation)
 
-        //this will create a line item in the db and add the inventory id to the reserved cards list
-        let itemUrl = await addLineItem(
-            itemToAdd,
-            currentReservation
-            )
-
-        if (itemUrl && typeof itemUrl == 'string'){
-            dispatch(
-                addItem({
-                    id: nanoid(),
-                    ...itemToAdd,
-                    url: itemUrl
-                })
-            )
+        if (itemUrl && typeof itemUrl === 'string') {
+            // Dispatch an action to add the item to the Redux store
+            dispatch(addItem({
+                id: nanoid(),
+                ...itemToAdd,
+                url: itemUrl
+            }))
         }
-        
 
-        //handle the localstorage
+        // Handle local storage
         let newItem = { ...itemToAdd, url: itemUrl }
-        //unsuprisingly, this is causing some duplicated items in the localstorage basket
         let newBasket = [...basket, newItem]
         localStorage.setItem('basket', JSON.stringify(newBasket))
     }
 
+    /**
+     * Removes an item from the basket
+     * @param {Object} itemToRemove - The item to remove from the basket
+     */
     function removeItemFromBasket(itemToRemove) {
         removeLineitem(
             itemToRemove,
-            () => successToast(`${itemToRemove.name} has been released from your reservation.  It is now available for others to reserve.`),
+            () => successToast(`${itemToRemove.name} has been released from your reservation. It is now available for others to reserve.`),
             () => errorToast(`Something went wrong. ${itemToRemove.name} was not able to be released.`)
         )
-        dispatch(
-            removeItem({
-                id: nanoid(),
-                ...itemToRemove
-            })
-        )
 
-        //handle the localstorage
-        //get the basket from local storage and parse it
+        // Dispatch an action to remove the item from the Redux store
+        dispatch(removeItem({
+            id: nanoid(),
+            ...itemToRemove
+        }))
+
+        // Handle local storage
         let oldBasket = localStorage.getItem('basket')
         let editableBasket
         if (oldBasket) {
             editableBasket = JSON.parse(oldBasket)
         }
-        //adjust the basket to remove the item in question
-        let newBasket = editableBasket.filter((item) => item.inventory_id != itemToRemove.inventory_id)
-        //set the local storage with a new basket with the item removed
+
+        // Adjust the basket to remove the item in question
+        let newBasket = editableBasket.filter((item) => item.inventory_id !== itemToRemove.inventory_id)
+
+        // Set the local storage with a new basket with the item removed
         localStorage.setItem('basket', JSON.stringify(newBasket))
     }
 
@@ -102,9 +108,6 @@ export default function ReservationModal({ show, handleClose }) {
                         <Col>
                             Let's get you some cards!
                         </Col>
-                        {/* <Col>
-                            Cart Expires in/at {expirationTime}
-                        </Col> */}
                     </Row>
                 </Modal.Title>
             </Modal.Header>
@@ -123,7 +126,7 @@ export default function ReservationModal({ show, handleClose }) {
                     </Row>
                     <Row>
                         <Col>
-                        <ReservationDetailsForm />
+                            <ReservationDetailsForm />
                         </Col>
                     </Row>
                 </Container>
@@ -137,21 +140,7 @@ export default function ReservationModal({ show, handleClose }) {
                 <Button variant="secondary" onClick={handleClose}>
                     Nevermind
                 </Button>
-                {/* VINCE/Issue-7:  We want to start here.  the onClick is the function that's called when a user clicks on this button.
-                That means it all starts here.
-                When this button is clicked, we want a few specific things to happen:
-                First, we should be able to get the details of our open reservation from the basketSlice via useSelector(openReservation)
-                Second, we want to create an api action in the api action directory to handle this specific api call, probably should call it putSubmitReservation
-                Lastly, we want to switch over to the api so we can handle what specifically happens when this reservation is submitted.
-                    That means the backend should progress the reservation to the next stage
-                    then, I think it would make sense if the backend's 200 response included the cards that are being lent.
-                After the button is clicked, the user should see a successToast('some message') if the response is good and an errorToast('some other message') if it's not.
-
-                Tips:  
-                -This is going to involve some async functions, so you should use the other apiActions to help you.
-                -don't forget that if you want the onClick to take parameters, you want to use an arrow function so it doesn't get immediately called on render.
-                -you will be messing around in python for this because you'll probably want to expose an endpoint for a custom method on the reservations endpoint. */}
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={() => submitReservation(currentReservation)}>
                     Submit Request
                 </Button>
                 <AvailabilityCheck />

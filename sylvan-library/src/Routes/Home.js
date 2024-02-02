@@ -1,5 +1,5 @@
 //The home route.  This app is very simple, so this is mostly what the average user will see.
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import ReservationModal from '../Components/ReservationModal';
 import ReservationViewer from '../Components/ReservationViewer';
@@ -33,41 +33,33 @@ export default function Home() {
     //some useEffect that goes and gets the reservations for the current user
     //this will return the reservations array
     useEffect(() => {
-        //don't bother getting this if the user isn't logged in.
-        if (userID) {
-            //just go get the active reservations
-            const fetchData = async () => {
-                setReservationsPending(true)
-                try {
-                    //obviously the user is hardCoded as 0 right now.
-                    const data = await getReservations(userID);
-                    if (data) {
-                        //if the user has an existing reservation, store that id_reservation to state
-                        dispatch(
-                            setReservations(data)
-                        )
-                    }
-                    //if there are no reservations
-                    if (!data.length) {
-                        console.log('there are no reservations')
-                        //if the user does not have one, create one.
-                        //this is creating 2 reservations
-                        //this is happening because the home component is re-rendering.
-                        //maybe this needs to go one component
-                        createReservation(userID)
-                    }
-                    setReservationsPending(false)
-                } catch (error) {
-                    console.error('Error:', error);
-                    setReservationsPending(false)
+        const fetchData = async () => {
+            setReservationsPending(true);
+
+            try {
+                const existingReservations = await getReservations(userID);
+
+                if (existingReservations && existingReservations.length > 0) {
+                    dispatch(setReservations(existingReservations));
+                } else {
+                    // Dispatch the createReservation thunk
+                    await dispatch(createReservation(userID));
                 }
-            };
-            fetchData()
+
+                setReservationsPending(false);
+            } catch (error) {
+                console.error('Error:', error);
+                setReservationsPending(false);
+            }
+        };
+
+        if (userID) {
+            fetchData();
         }
-    }, [userID])
+    }, [userID]);
 
     //store if there are reservations in a sane variable to check against
-    let openReservations = reservations.filter((reservation) => reservation.stage != 1)
+    let openReservations = reservations.filter((reservation) => reservation.stage != "Pending")
 
     let thereAreOpenReservations = openReservations && openReservations.length > 0
 
@@ -102,7 +94,12 @@ export default function Home() {
         <div className='home'>
             <UserWidget />
             <div className='hero-text'>Sylvan Library</div>
-            <Button className='megaButton' onClick={() => handleShow()}>Reserve Cards</Button>
+            <Button className='megaButton' disabled={!userID} onClick={() => handleShow()}>Reserve Cards</Button>
+            {!userID &&
+                <Alert variant='warning' className='mt-1'>
+                You must be logged in to reserve cards.
+              </Alert>
+            }
             <ReservationModal show={show} handleClose={handleClose} />
         </div>
     )

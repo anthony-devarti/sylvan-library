@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { thunk } from 'redux-thunk'; //be careful, chatGPT insists that this should be a default export.
 import counterReducer from '../features/counter/counterSlice'
 import basketReducer from '../features/basket/basketSlice'
 import searchReducer from '../features/search/searchSlice'
@@ -10,5 +11,7 @@ export default configureStore({
     basket: basketReducer,
     search: searchReducer,
     user: userReducer
-  }
-})
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(thunk), // Include Thunk in the middleware
+});
