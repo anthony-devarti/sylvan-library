@@ -1,35 +1,40 @@
 /**
- * Submits a reservation with the given ID.
+ * Submits a reservation with the given URL and then dispatches the newly created reservation to the state.
  * 
- * @param {string|number} reservationId - The ID of the reservation to be submitted.
- * @returns {Object} An object representing the outcome of the submission.
- * @throws Will throw an error if the reservation ID is invalid or if an error occurs during submission.
+ * @param {string} reservationUrl - The URL of the reservation to be submitted.
+ * @param {string} userId - The ID of the user for whom the new reservation is being created.
+ * @returns {Function} A Redux Thunk function that can be dispatched to perform the submission and state update.
+ * @throws Will throw an error if the reservation URL is invalid or if an error occurs during submission.
  * @example
  * // Example usage
- * const reservationId = '123'; // Replace with the actual reservation ID
- * const result = submitReservation(reservationId);
- * console.log(result); // { success: true, message: 'Reservation submitted successfully' }
+ * const reservationUrl = '/reservation/123/'; // Replace with the actual reservation URL
+ * const userId = '456'; // Replace with the actual user ID
+ * const thunkFunction = submitReservation(reservationUrl, userId);
+ * dispatch(thunkFunction);
  */
 import axios from "axios";
 import { successToast, errorToast } from "../Components/SubComponents/Toastify";
+import createReservation from "./createReservation";
+import { setCurrentReservation, setReservations } from "../features/basket/basketSlice";
 
-const submitReservation = async (reservationId) => {
+const submitReservation = (reservationUrl, userId) => async (dispatch) => {
+  console.log('in submit reservation')
   try {
-    // Parse the reservationId to ensure it's a number
-    const idAsNumber = typeof reservationId === 'string' ? parseInt(reservationId, 10) : reservationId;
-
-    if (isNaN(idAsNumber)) {
-      // Handle invalid reservationId
-      errorToast('Invalid reservation ID');
-      return { success: false, message: 'Invalid reservation ID' };
-    }
-
-    const response = await axios.post(`/reservation/${idAsNumber}/submit_reservation/`);
+    // Submit the reservation using the provided URL
+    const response = await axios.post(`${reservationUrl}submit_reservation/`);
 
     // Display a success toast
     successToast(response.data.message);
 
-    return { success: true, message: response.data.message };
+    // Make a new reservation
+    const createReservationThunk = createReservation(userId);
+    const newReservation = await dispatch(createReservationThunk);
+
+    // Dispatch the new reservation to the state
+    dispatch(setReservations([newReservation]));
+    dispatch(setCurrentReservation([newReservation]));
+
+    return { success: true, message: response.data.message, newReservation };
 
   } catch (error) {
     // Handle errors and display an error toast

@@ -1,17 +1,16 @@
 //shows the user what cards they have already added to their cart to reserve
 import { Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import removeLineItem from '../../../apiActions/removeLineItem';
 
 
 export default function Basket({ removeItemFromBasket }) {
 
-    const contents = useSelector(state =>
-        state.basket.contents
-    )
+    const dispatch = useDispatch()
 
-    const liability = useSelector(state =>
-        state.basket.value
-    )
+    const contents = useSelector(state => state.basket.contents)
+    const liability = useSelector(state => state.basket.value)
+    const idReservation = useSelector(state => state.basket.openReservationID)
 
     return (
         <table>
@@ -26,16 +25,17 @@ export default function Basket({ removeItemFromBasket }) {
                     </td>
                 </tr>
                 {contents.map((item) => {
+                    console.log(item)
                     return (
-                        <tr>
+                        <tr key={item.id_inventory}>
                             <td>
                                 {item.name}
                             </td>
                             <td>
-                                {item.inventory_id}
+                                {item.id_inventory}
                             </td>
                             <td>
-                                <Button variant="danger" onClick={() => removeItemFromBasket(item)}>
+                                <Button variant="danger" onClick={() => dispatch(removeLineItem(item, idReservation))}>
                                     X
                                 </Button>
                             </td>

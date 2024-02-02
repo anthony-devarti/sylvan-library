@@ -6,34 +6,34 @@ This is a unitasker function, and should only be used to get the list of reserve
 This should just return an array of inventory ids of all cards from the collection that are currently reserved.
 */
 
-import { baseURL } from "../AppConstants";
 import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { baseURL } from "../AppConstants";
+import { updateReservedCards } from "../features/basket/basketSlice"; // Import the action creator
 
-export default function getReservedCardsList() {
-
-    let reservedArray = []
-
-    let result
-
-    return axios.get(baseURL + 'lineitem/', {
+// Define the Redux Thunk using createAsyncThunk
+const getReservedCardsList = createAsyncThunk(
+  "basket/getReservedCardsList",
+  async (_, { dispatch }) => {
+    try {
+      const response = await axios.get(baseURL + "lineitem/", {
         params: {
-            hold: true
-        }
-    })
-        .then((response) => {
-            // handle success
-            result = response.data.results
-            //probably don't want to run any onSuccess type funcitons here
-            let i = 0
-            do {
-                reservedArray.push(result[i].id_inventory)
-                i++
-            } while ( i < result.length)
-            return reservedArray
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-            //todo: there maybe should be an error toast explaining what's going on.
-        })
-}
+          hold: true,
+        },
+      });
+
+      const result = response.data.results;
+      const reservedArray = result.map((item) => item.id_inventory);
+
+      // Dispatch the updateReservedCards action with the reserved cards
+      dispatch(updateReservedCards(reservedArray));
+
+      return reservedArray;
+    } catch (error) {
+      console.error(error);
+      throw error; // Re-throw the error so that the calling code can handle it if needed
+    }
+  }
+);
+
+export default getReservedCardsList;

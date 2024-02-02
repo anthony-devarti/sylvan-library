@@ -1,9 +1,9 @@
 import axios from "axios";
-import { baseURL } from "../AppConstants";
+import { baseURL, reservationStage } from "../AppConstants";
 
-export default async function getReservations(userID) {
+export default async function getUnsubmittedReservations(userID) {
     try {
-      const response = await axios.get(baseURL + 'reservation/', {
+      const response = await axios.get(baseURL + `reservation/?stage=${reservationStage.unsubmitted}`, {
         params: {
           id_user: userID,
           //we want to get all active reservations, no need to grab every complete one

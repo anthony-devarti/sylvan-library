@@ -12,6 +12,6 @@ export default configureStore({
     search: searchReducer,
     user: userReducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(thunk), // Include Thunk in the middleware
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({thunk}) // Include Thunk in the middleware
 });
