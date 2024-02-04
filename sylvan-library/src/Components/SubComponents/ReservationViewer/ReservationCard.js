@@ -19,6 +19,7 @@ import dateTimeFormatter from '../../../utilities/dateTimeFormatter';
 import calculateTimeDifference from '../../../utilities/calculateTimeDifference';
 import { useState } from 'react';
 import NotificationFlag from './NotificationFlag';
+import ReviewCardsModal from './ReviewCardsModal';
 
 export default function ReservationCard({ reservation }) {
     //unique modal to view cards in the current reservation
@@ -37,22 +38,6 @@ export default function ReservationCard({ reservation }) {
     //basic assumption checking
     if (!reservation) return null
     if (typeof reservation != 'object') return null
-
-    const ReviewCardsModal = () => {
-        return (
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Cards Included</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Some list of cards attached to this reservation id</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        )
-    }
 
     //handle the message that appears in the card
     let message = ''
@@ -77,6 +62,8 @@ export default function ReservationCard({ reservation }) {
         default:
             break;
     }
+
+    console.log(reservation)
 
 
     return (
@@ -148,7 +135,7 @@ export default function ReservationCard({ reservation }) {
                     </Row>
                 </Card.Footer>
             </Card.Body>
-            <ReviewCardsModal />
+            <ReviewCardsModal show={show} handleClose={handleClose} reservationID={reservation.id}/>
         </Card>
     )
 }
