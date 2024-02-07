@@ -14,26 +14,53 @@ reservation | object | this should be an individual reservation, we're checking 
 */
 import { Card, Button, Row, Col, Modal } from 'react-bootstrap';
 import ReservationProgressBar from './ReservationProgressBar';
-import { openReservationMessages, reservationStage } from '../../../AppConstants';
+import { decisionPoint, openReservationMessages, reservationStage } from '../../../AppConstants';
 import dateTimeFormatter from '../../../utilities/dateTimeFormatter';
 import calculateTimeDifference from '../../../utilities/calculateTimeDifference';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import NotificationFlag from './NotificationFlag';
 import ReviewCardsModal from './ReviewCardsModal';
+import getRequiredActionDetails from '../../../apiActions/getRequiredActionDetails';
+import DecisionPointModal from './DecisionPointModal';
 
 export default function ReservationCard({ reservation }) {
     //unique modal to view cards in the current reservation
     //don't plan on using this anywhere else, so I'll keep it here.
     //this needs to be at the top so we're not calling hooks conditionally
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const actionRequired = true //dummy data, delete this line
-    //actionRequired should come from the backend, and it makes sense that it would be coming from the reservation
+    const [showDecisionPointModal, setShowDecisionPointModal] = useState(false);
+    const handleCloseDecisionPointModal = () => setShowDecisionPointModal(false);
+    const handleShowDecisionPointModal = () => setShowDecisionPointModal(true);
+
+    // console.log(reservation)
+
+    const actionRequired = reservation.action_required != decisionPoint.none
+
+    const [actionDetails, setActionDetails] = useState(null)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const details = await getRequiredActionDetails(reservation.action_required);
+                setActionDetails(details);
+            } catch (error) {
+                console.error('Error fetching required action details:', error);
+                // Handle error if needed
+            }
+        };
+
+        if (reservation && actionRequired) {
+            fetchData();
+        }
+    }, [reservation]);
 
     const defaultState = false //dummy data, delete this line
     //default state should come from the backend, probably also from the reservation modal
+
+
+    if (!actionDetails) return null
 
     //basic assumption checking
     if (!reservation) return null
@@ -50,7 +77,6 @@ export default function ReservationCard({ reservation }) {
             message = openReservationMessages.approved
             break;
         case reservationStage.delivered:
-            console.log('this is delivered too')
             message = openReservationMessages.delivered
             break;
         case reservationStage.borrowed:
@@ -63,9 +89,6 @@ export default function ReservationCard({ reservation }) {
             break;
     }
 
-    console.log(reservation)
-
-
     return (
         <Card
             bg='dark'
@@ -75,13 +98,13 @@ export default function ReservationCard({ reservation }) {
         >
             <Card.Header>
                 <h1>
-                    Open Reservation
+                    Reservation #{reservation.id}
                 </h1>
             </Card.Header>
             <Card.Body>
                 {/* this section handles notifications if necessary  */}
                 {actionRequired &&
-                    <NotificationFlag notiType={'warning'} mousoverMessage={'Action is required for your reservation to progress.'} />
+                    <NotificationFlag notiType={'warning'} mousoverMessage={actionDetails.description} />
                 }
                 {defaultState &&
                     <NotificationFlag notiType={'danger'} mousoverMessage={'Something serious'} />
@@ -127,15 +150,21 @@ export default function ReservationCard({ reservation }) {
                         </Col>
                         {actionRequired &&
                             <Col>
-                                <Button>
-                                    Address Action
+                                <Button onClick={handleShowDecisionPointModal}>
+                                    {actionDetails.button_text}
                                 </Button>
+                                <DecisionPointModal
+                                    show={showDecisionPointModal}
+                                    handleClose={handleCloseDecisionPointModal}
+                                    decision={actionDetails}
+                                    reservation={reservation}
+                                />
                             </Col>
                         }
                     </Row>
                 </Card.Footer>
             </Card.Body>
-            <ReviewCardsModal show={show} handleClose={handleClose} reservationID={reservation.id}/>
+            <ReviewCardsModal show={show} handleClose={handleClose} reservationID={reservation.id} />
         </Card>
     )
 }

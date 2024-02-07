@@ -23,3 +23,16 @@ export const reservationStage = {
     incomplete: 9,
     borrowed: 11
 }
+
+export const decisionPoint = {
+    lender_accepts_reservation: 1,
+    borrower_accepts_contents: 2,
+    lender_corrects: 3,
+    borrower_loses_cards: 4,
+    lender_received_by_due_date: 5,
+    lender_received_by_grace_period: 6,
+    lender_received_by_end_of_delinquency: 7,
+    lender_accepts_return: 8,
+    borrower_corrects_faulty_return: 9,
+    none: 10
+}
