@@ -10,27 +10,26 @@ for space consideration, stages should be associated with icons unless they are 
 */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faHandshakeSimple, faHandsHoldingCircle, faRightLeft, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { Row, Col } from 'react-bootstrap';
-import { useState } from "react";
+import { reservationStage } from "../../../AppConstants";
 
 export default function ReservationProgressBar({ stage }) {
 
     let approved, delivered, borrowed, returned
 
     switch (stage) {
-        case 'Approved':
+        case reservationStage.approved:
             approved = 'active'
             break;
-        case 'Delivered':
+        case reservationStage.delivered:
             delivered = 'active'
             approved = 'completed'
             break;
-        case 'Borrowed':
+        case reservationStage.borrowed:
             borrowed = 'active'
             approved = 'completed'
             delivered = 'completed'
             break;
-        case 'Returned':
+        case reservationStage.returned:
             returned = 'active'
             approved = 'completed'
             delivered = 'completed'
