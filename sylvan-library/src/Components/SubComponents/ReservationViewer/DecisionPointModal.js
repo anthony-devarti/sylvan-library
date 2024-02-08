@@ -10,6 +10,8 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
     const csrfToken = useSelector(state => state.user.csrfToken)
     const userID = useSelector(state => state.user.userID)
 
+    console.log(reservation)
+
     useEffect(() => {
         getSubmittedReservations(userID)
     }, [])
@@ -26,7 +28,9 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
             acceptMethod = 'accept_delivery'
             declineMethod = 'decline_delivery'
             break;
-    
+        case decisionPoint.lender_received_by_due_date:
+            acceptMethod = 'return_cards'
+            declineMethod = 'mark_as_late' //this method does not exist yet.
         default:
             break;
     }
