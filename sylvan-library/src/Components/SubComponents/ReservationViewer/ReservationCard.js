@@ -35,11 +35,16 @@ export default function ReservationCard({ reservation }) {
     const handleCloseDecisionPointModal = () => setShowDecisionPointModal(false);
     const handleShowDecisionPointModal = () => setShowDecisionPointModal(true);
 
+    const [actionDetails, setActionDetails] = useState(null)
     // console.log(reservation)
 
-    const actionRequired = reservation.action_required != decisionPoint.none
+    //borrowerActionRequired checks...
+    const borrowerActionRequired = 
+    reservation.action_required != decisionPoint.none &&  //if any action is required on this reservation
+    actionDetails?.responsibility == 'borrower' //if there are, that we wait for the action, then check if it's the borrower's responsibility
 
-    const [actionDetails, setActionDetails] = useState(null)
+    const defaultState = reservation.defaultState //this should be a boolean
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,13 +56,11 @@ export default function ReservationCard({ reservation }) {
             }
         };
 
-        if (reservation && actionRequired) {
+        if (reservation) {
             fetchData();
         }
     }, [reservation]);
 
-    const defaultState = false //dummy data, delete this line
-    //default state should come from the backend, probably also from the reservation modal
 
 
     if (!actionDetails) return null
@@ -103,11 +106,11 @@ export default function ReservationCard({ reservation }) {
             </Card.Header>
             <Card.Body>
                 {/* this section handles notifications if necessary  */}
-                {actionRequired &&
+                {borrowerActionRequired &&
                     <NotificationFlag notiType={'warning'} mousoverMessage={actionDetails.description} />
                 }
                 {defaultState &&
-                    <NotificationFlag notiType={'danger'} mousoverMessage={'Something serious'} />
+                    <NotificationFlag notiType={'danger'} mousoverMessage={'This reservation has defaulted. Meaning that your continued standing in this program is under review.  Please return any cards borrowed this way immediately.  Please do not attempt to create any new Reservations until contacted by the Lender.'} />
                 }
                 <Card.Title> <ReservationProgressBar stage={reservation.stage} /></Card.Title>
                 {/* end of notificaiton section  */}
@@ -148,7 +151,7 @@ export default function ReservationCard({ reservation }) {
                         <Col>
                             <Button onClick={handleShow}>Review Cards</Button>
                         </Col>
-                        {actionRequired &&
+                        {borrowerActionRequired &&
                             <Col>
                                 <Button onClick={handleShowDecisionPointModal}>
                                     {actionDetails.button_text}

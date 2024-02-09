@@ -27,7 +27,7 @@ const ReviewCardsModal = ({ show, handleClose, reservationID }) => {
                 <ul>
                     {list.map((item) => {
                         return (
-                            <li>
+                            <li key={item.id}>
                                 {item.name}
                             </li>
                         )

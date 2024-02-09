@@ -37,17 +37,14 @@ export default function Home() {
                 const allReservations = await getSubmittedReservations(userID);
 
                 if (allReservations && allReservations.length) {
-                    console.log('setting reservations')
                     dispatch(setReservations(allReservations));
                 }
                 if (unsubmittedReservations && unsubmittedReservations.length) {
-                    console.log('setting current reservation')
                     dispatch(setCurrentReservation(unsubmittedReservations))
                 }
 
                 if (!unsubmittedReservations || !unsubmittedReservations.length) {
                     // Dispatch the createReservation thunk
-                    console.log('create a new reservation')
                     createReservation(userID)(dispatch)
                 }
 
