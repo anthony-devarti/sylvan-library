@@ -10,8 +10,6 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
     const csrfToken = useSelector(state => state.user.csrfToken)
     const userID = useSelector(state => state.user.userID)
 
-    console.log(reservation)
-
     useEffect(() => {
         getSubmittedReservations(userID)
     }, [])
