@@ -2,9 +2,14 @@
 
 .reservation-modal {
 
-    .reservation-modal-body {
-        display: flex;
-        flex-direction: row;
+    // .reservation-modal-body {
+    //     display: flex;
+    //     flex-direction: row;
+    // }
+
+    .reservation-modal-delivery-form{
+        padding-top: 1rem;
+        border-top: 1px white solid;
     }
 
     .modal-content {
@@ -14,11 +19,25 @@
         .modal-header {
             background-color: $app-background;
             color: white;
+
+            .warning-message{
+                background-color: red;
+                border-radius: 15pt;
+                padding: .5rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
 
         .modal-body{
             background-color: $app-background;
             color: white;
+            
+            .body-container{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
 
         }
 
