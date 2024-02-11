@@ -43,14 +43,6 @@ export default function ReservationModal({ show, handleClose }) {
         console.log('clear the cart')
     }
 
-    //the submit button
-    const handleSubmit = () => {
-        dispatch(submitReservation(currentReservationUrl, userID));
-        getBasketContents();
-        createReservation(userID);
-        handleClose();
-    };
-
     //Formik for the form submission functionality
     const formik = useFormik({
         initialValues: {
@@ -141,7 +133,6 @@ export default function ReservationModal({ show, handleClose }) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Container className='body-container'>
                     {/* Top Half */}
                     <Row className="reservation-modal-body">
                         <Col xs xl={9}>
@@ -158,7 +149,6 @@ export default function ReservationModal({ show, handleClose }) {
                             <ReservationDetailsForm formik={formik} />
                         </Col>
                     </Row>
-                </Container>
             </Modal.Body>
             <Modal.Footer>
                 {basket.length &&

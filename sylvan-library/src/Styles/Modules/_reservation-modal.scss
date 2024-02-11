@@ -32,12 +32,9 @@
         .modal-body{
             background-color: $app-background;
             color: white;
-            
-            .body-container{
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
         }
 
