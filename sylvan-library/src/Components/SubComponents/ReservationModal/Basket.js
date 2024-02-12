@@ -19,7 +19,9 @@ export default function Basket({ removeItemFromBasket }) {
                     <td>
                         <b>Name</b>
                     </td>
-                    <td>ID</td>
+                    <td>
+                        <b>ID</b>
+                    </td>
                     <td>
                         <b>Remove</b>
                     </td>
@@ -49,7 +51,7 @@ export default function Basket({ removeItemFromBasket }) {
                         <b>Total: </b>
                     </td>
                     <td>
-                        {contents.length} items valued at ${liability}
+                        {contents.length} total items
                     </td>
                 </tr>
             </tfoot>

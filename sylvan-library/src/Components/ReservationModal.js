@@ -13,6 +13,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { replaceBasket } from '../features/basket/basketSlice';
 import getSubmittedReservations from '../apiActions/getAllReservations';
+import clearBasket from '../apiActions/clearBasket';
 
 /**
  * ReservationModal Component
@@ -41,6 +42,7 @@ export default function ReservationModal({ show, handleClose }) {
     function clearCart() {
         // TODO: Handle this in Redux
         console.log('clear the cart')
+        dispatch(clearBasket(currentReservation))
     }
 
     //Formik for the form submission functionality
