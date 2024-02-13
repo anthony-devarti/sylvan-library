@@ -27,7 +27,6 @@ export default function Basket({ removeItemFromBasket }) {
                     </td>
                 </tr>
                 {contents.map((item) => {
-                    console.log(item)
                     return (
                         <tr key={item.id_inventory}>
                             <td>

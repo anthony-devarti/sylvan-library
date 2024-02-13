@@ -62,7 +62,6 @@ const UserInfo = ({closeModal}) => {
     
             if (response.ok) {
                 // Successful logout
-                console.log('Logout successful');
                 // Perform any additional client-side cleanup or navigation
     
                 // Assuming you have a Redux action to clear user data

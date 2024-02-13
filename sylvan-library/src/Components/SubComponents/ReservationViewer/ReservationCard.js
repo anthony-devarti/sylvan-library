@@ -36,7 +36,6 @@ export default function ReservationCard({ reservation }) {
     const handleShowDecisionPointModal = () => setShowDecisionPointModal(true);
 
     const [actionDetails, setActionDetails] = useState(null)
-    // console.log(reservation)
 
     //borrowerActionRequired checks...
     const borrowerActionRequired = 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReservationCard from "./SubComponents/ReservationViewer/ReservationCard";
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import getSubmittedReservations from "../apiActions/getAllReservations"; // Replace 'api' with the actual path to your API call function
+import getSubmittedReservations from "../apiActions/getAllReservations";
 
 /**
  * Renders a component to view and navigate through user reservations.
@@ -52,6 +52,12 @@ const ReservationViewer = () => {
             setCurrent(current + 1);
         }
     };
+
+    if (!reservations.length){
+        return (
+            <Alert varaint='info'>No In Progress Reservations Found</Alert>
+        )
+    }
 
     if (reservations.length > 0) {
         return (
