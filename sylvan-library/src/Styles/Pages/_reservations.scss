@@ -1,0 +1,42 @@
+.reservations{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../public/sylvanLibrary.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+
+    .hero-text-upshift{
+        color: black;
+        font-size: 60pt;
+        position: relative;
+        top: 10px;
+        left: 0;
+        right: 0;
+        font-weight: 900;
+        -webkit-text-stroke-width: 3px;
+        -webkit-text-stroke-color: rgb(255, 255, 255);
+        font-family: Noto-serif;
+        background-color: rgb(17 17 17 / 30%);
+        width: 100vw;
+    }
+
+    .reservation-viewer{
+        padding-top: 2rem;
+    }
+
+    .btn{
+        border-radius: 90pt;
+        background-color: $reserveColor;
+        border-color: white;
+        font-family: noto-serif;
+        transition: all .5s ease-in-out;
+    }
+
+    .nav-arrow{
+        width: 50vw;
+        padding-top: 0;
+    }
+}
