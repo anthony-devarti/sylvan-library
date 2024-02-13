@@ -32,7 +32,7 @@
         width: 70vw;
         height: 12rem;
         font-size: 50pt;
-        margin-top: 40vh;
+        margin-top: 25vh;
         border-radius: 90pt;
         background-color: $reserveColor;
         border-color: white;
@@ -50,20 +50,5 @@
         align-items: center;
         justify-content: center;
         height: 90vh;
-    }
-
-    .hero-text-upshift{
-        color: black;
-        font-size: 60pt;
-        position: absolute;
-        top: 8vh;
-        left: 0;
-        right: 0;
-        font-weight: 900;
-        -webkit-text-stroke-width: 3px;
-        -webkit-text-stroke-color: rgb(255, 255, 255);
-        font-family: Noto-serif;
-        background-color: rgb(17 17 17 / 30%);
-        // width: 100%;
     }
 }

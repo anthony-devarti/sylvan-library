@@ -244,6 +244,7 @@
   display: flex;
   align-items: start;
   flex-direction: row-reverse;
+  width: 100vw;
 }
 .user-actions .user-button {
   cursor: pointer;
@@ -251,6 +252,15 @@
 }
 .user-actions .user-button:hover {
   scale: 1.1;
+}
+
+.nav-arrow {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 7rem;
+  width: 100vw;
+  font-size: larger;
 }
 
 .home {
@@ -282,7 +292,7 @@
   width: 70vw;
   height: 12rem;
   font-size: 50pt;
-  margin-top: 40vh;
+  margin-top: 25vh;
   border-radius: 90pt;
   background-color: #962c6a;
   border-color: white;
@@ -299,11 +309,22 @@
   justify-content: center;
   height: 90vh;
 }
-.home .hero-text-upshift {
+
+.reservations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("../../public/sylvanLibrary.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+.reservations .hero-text-upshift {
   color: black;
   font-size: 60pt;
-  position: absolute;
-  top: 8vh;
+  position: relative;
+  top: 10px;
   left: 0;
   right: 0;
   font-weight: 900;
@@ -311,4 +332,19 @@
   -webkit-text-stroke-color: rgb(255, 255, 255);
   font-family: Noto-serif;
   background-color: rgba(17, 17, 17, 0.3);
+  width: 100vw;
+}
+.reservations .reservation-viewer {
+  padding-top: 2rem;
+}
+.reservations .btn {
+  border-radius: 90pt;
+  background-color: #962c6a;
+  border-color: white;
+  font-family: noto-serif;
+  transition: all 0.5s ease-in-out;
+}
+.reservations .nav-arrow {
+  width: 50vw;
+  padding-top: 0;
 }/*# sourceMappingURL=style.css.map */

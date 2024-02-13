@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReservationCard from "./SubComponents/ReservationViewer/ReservationCard";
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import ReservationModal from "./ReservationModal";
+import { faAngleUp, faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import getSubmittedReservations from "../apiActions/getAllReservations"; // Replace 'api' with the actual path to your API call function
 
 /**
@@ -35,18 +34,6 @@ const ReservationViewer = () => {
     }, []); // Empty dependency array ensures the effect runs only once on mount
 
     /**
-     * Handles opening the reservation modal.
-     * @function
-     */
-    const handleShow = () => setShow(true);
-
-    /**
-     * Handles closing the reservation modal.
-     * @function
-     */
-    const handleClose = () => setShow(false);
-
-    /**
      * Handles navigating to the previous reservation.
      * @function
      */
@@ -69,7 +56,6 @@ const ReservationViewer = () => {
     if (reservations.length > 0) {
         return (
             <div className="reservation-viewer">
-                <div className="hero-text-upshift">Sylvan Library</div>
                 <div className="reservation-card-container">
                     <div>
                         <ReservationCard reservation={reservations[current]} />
@@ -91,12 +77,6 @@ const ReservationViewer = () => {
                         )}
                     </div>
                 </div>
-                <div>
-                    <Button className='mini-reservation-button' onClick={handleShow}>
-                        <FontAwesomeIcon icon={faPlus} size="3x"/>
-                    </Button>
-                </div>
-                <ReservationModal show={show} handleClose={handleClose} />
             </div>
         );
     }

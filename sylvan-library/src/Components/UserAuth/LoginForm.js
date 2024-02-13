@@ -44,13 +44,19 @@ export default function LoginForm() {
             // Handle the response, e.g., check for success or error
             const data = await response.json();
             console.log(data);
-            successToast('Succesfully Logged In!')
-            //now we need to handle some redux stuff
-            if (data.user) {
-                dispatch(loginUser(data))
-                //pop that userID in localStorage
-                localStorage.setItem('user', JSON.stringify(data.user))
-                localStorage.setItem('csrfToken', data.csrf_token)
+            if (response.ok){
+                successToast('Succesfully Logged In!')
+                //now we need to handle some redux stuff
+                if (data.user) {
+                    dispatch(loginUser(data))
+                    //pop that userID in localStorage
+                    localStorage.setItem('user', JSON.stringify(data.user))
+                    localStorage.setItem('csrfToken', data.csrf_token)
+                }
+            }
+
+            if (response.status === 401){
+                errorToast('Incorrect Username or Password.  Please try again.')
             }
         } catch (error) {
             console.error('Error during login:', error);
