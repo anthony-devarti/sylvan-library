@@ -37,7 +37,6 @@ export default function addLineItem(item, reservationID, dispatch, onSuccess, on
         return response.data.url;
       })
       .catch(function (error) {
-        console.log('in the catch');
         console.log(error);
         errorToast(`Something went wrong, and your item was not reserved successfully.`);
       });

@@ -13,9 +13,6 @@ const removeLineItem = (item, reservationID) => async (dispatch) => {
         name: item.name,  // Include required fields
         id_reservation: reservationID,  // Include required fields
     };
-
-    console.log(updatedItem)
-    console.log(reservationID)
   
     return axios
       .put(`lineitem/${item.id}/remove_from_basket/`, {

@@ -15,6 +15,7 @@
  * console.log(updatedReservation); // Log the details of the updated reservation
  */
 import axios from 'axios';
+import { errorToast, successToast } from '../Components/SubComponents/Toastify';
 
 const decisionPointAdvance = async (reservationId, destination, csrfToken) => {
     try {
@@ -23,9 +24,13 @@ const decisionPointAdvance = async (reservationId, destination, csrfToken) => {
                 'X-CSRFToken': csrfToken,
             },
         });
+        if (response.status === 200){
+            successToast(response.messsage)
+        }
         return response.data;
     } catch (error) {
         console.error(`Error advancing decision point for reservation ID ${reservationId}:`, error);
+        errorToast(error)
         throw error;
     }
 }

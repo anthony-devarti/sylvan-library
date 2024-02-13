@@ -52,7 +52,6 @@ export default function SearchBar({addToBasket}) {
                 {searchResults.map((item) => {
                     //just don't render them here if they are among the cards that are reserved already
                     if (reservedCardsInState && reservedCardsInState.includes(item.inventory_id)){
-                        console.log('hiding something that is reserved')
                         return null
                     }
                     return (
