@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .search .search-field {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -38,7 +39,7 @@
   min-height: 80vh;
 }
 .reservation-modal .modal-content .modal-header {
-  background-color: rgb(53, 51, 51);
+  background-color: #353333;
   color: white;
 }
 .reservation-modal .modal-content .modal-header .warning-message {
@@ -49,14 +50,14 @@
   padding-right: 1rem;
 }
 .reservation-modal .modal-content .modal-body {
-  background-color: rgb(53, 51, 51);
+  background-color: #353333;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .reservation-modal .modal-content .modal-footer {
-  background-color: rgb(53, 51, 51);
+  background-color: #353333;
   display: flex;
   justify-content: space-around;
 }
@@ -192,7 +193,7 @@
 }
 .progress-bar .completed {
   opacity: 0.6;
-  background-color: rgb(53, 51, 51);
+  background-color: #353333;
   color: gray;
 }
 
@@ -347,4 +348,145 @@
 .reservations .nav-arrow {
   width: 50vw;
   padding-top: 0;
+}
+
+.problem {
+  background-color: #353333;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+.problem .problem-form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+.problem .problem-form .checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: x-large;
+}
+.problem .problem-form .custom-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.problem .problem-form .custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  margin-right: 8px;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+.problem .problem-form .custom-checkbox::before {
+  content: "✘";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-weight: bold;
+  font-size: 24px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.problem .problem-form .custom-checkbox:checked::before {
+  opacity: 1;
+}
+.problem .problem-form .form-group {
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.problem .problem-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.problem .problem-form .form-group textarea,
+.problem .problem-form .form-group select,
+.problem .problem-form .form-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+.problem .problem-form .form-group .error-message {
+  color: red;
+  margin-top: 5px;
+}
+.problem .problem-form .submit-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.problem .problem-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.problem .problem-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.problem .problem-form .line-item-container {
+  margin-top: 1rem;
+  height: 50%;
+  overflow-y: scroll;
+}
+.problem .problem-form .line-item-container.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+.problem .problem-form .line-item-container h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.problem .problem-form .line-item-container .line-item {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  width: 60%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.problem .problem-form .line-item-container .line-item label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.problem .problem-form .line-item-container .line-item select {
+  margin-left: 2rem;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+.problem .problem-form .line-item-container .line-item:nth-child(odd) {
+  background: linear-gradient(to right, rgba(14, 14, 14, 0), #0e0e0e, rgba(14, 14, 14, 0));
+}
+.problem .problem-form .line-item-container .line-item:nth-child(even) {
+  background: linear-gradient(to right, rgba(214, 214, 214, 0), #d6d6d6, rgba(214, 214, 214, 0));
+}
+.problem .problem-form .line-item-container .line-item + .line-item {
+  border-top: none;
+}
+.problem .problem-form select {
+  border-radius: 10px;
+  padding: 1rem;
+}
+.problem .problem-form .report-button {
+  width: 60%;
 }/*# sourceMappingURL=style.css.map */

@@ -3,9 +3,12 @@ import { decisionPoint } from '../../../AppConstants';
 import decisionPointAdvance from '../../../apiActions/decisionPointAdvance';
 import { useSelector } from 'react-redux';
 import getSubmittedReservations from '../../../apiActions/getAllReservations';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
+
+    const navigate = useNavigate()
 
     const csrfToken = useSelector(state => state.user.csrfToken)
     const userID = useSelector(state => state.user.userID)
@@ -19,12 +22,14 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
     //handle what happens when you click a button
     let acceptMethod = ''
     let declineMethod = ''
+    let declineRoute = ''
 
     //handle what action is being handled by the decisionPointAdvance for accept or decline
     switch (decision.id) {
         case decisionPoint.borrower_accepts_contents:
             acceptMethod = 'accept_delivery'
             declineMethod = 'decline_delivery'
+            declineRoute = `/problem/${reservation.id}`
             break;
         case decisionPoint.lender_received_by_due_date:
             acceptMethod = 'return_cards'
@@ -33,15 +38,14 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
             break;
     }
 
-
     const acceptHandler = () => {
         decisionPointAdvance(reservation.id, acceptMethod, csrfToken)
         handleClose()
     }
 
     const declineHandler = () => {
-        decisionPointAdvance(reservation.id, declineMethod, csrfToken)
-        handleClose()
+        console.log('in the declineHandler', declineRoute)
+        navigate(declineRoute)
     }
 
     return (
@@ -65,7 +69,7 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
             </Modal.Body>
             <Modal.Footer className='decision-point-footer'>
                 {/* reminder that for the first pass through, we are assuming that only the affirmative choices are taken  */}
-                <Button variant="danger" onClick={() => console.log('Negative choice selected')}>
+                <Button variant="danger" onClick={declineHandler}>
                     {decision.decline_button}
                 </Button>
                 <Button variant="success" onClick={acceptHandler}>
