@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { errorToast } from '../Components/SubComponents/Toastify';
+import { baseURL } from '../AppConstants';
 
 /**
  * Fetches the list of reserved cards associated with a specific reservation.
@@ -22,6 +23,7 @@ import { errorToast } from '../Components/SubComponents/Toastify';
 const getReservationCardsList = async (reservationID) => {
   try {
     const response = await axios.get('lineitem/', {
+      baseURL: baseURL,
       params: {
         hold: true,
         id_reservation: reservationID,
