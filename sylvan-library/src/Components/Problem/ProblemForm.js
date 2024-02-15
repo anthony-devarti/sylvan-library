@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Alert, Button } from 'react-bootstrap';
 import openCase from '../../apiActions/openCase';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ProblemForm = ({ reservationID, lineItems }) => {
     const userID = useSelector(state => state.user.userID)
@@ -19,18 +19,15 @@ const ProblemForm = ({ reservationID, lineItems }) => {
         userID: userID,
         reservationID: reservationID,
         entireReservationUndelivered: false,
-        lineItemProblems: lineItems.reduce((acc, lineItem) => {
-            acc[lineItem.id] = 'nothingWrong';
-            return acc;
-        }, {}),
-        note: '',
+        lineItemProblems: {},
+        note: '',  // Add a note field to the initial values
     };
 
     const handleSubmit = (values) => {
         // Handle form submission logic here
-        console.log(values);
+        // console.log(values);
         openCase(values)
-        //now we should redirect back to the reservations route.
+        // Now we should redirect back to the reservations route.
         navigate('/reservations')
     };
 
@@ -59,6 +56,14 @@ const ProblemForm = ({ reservationID, lineItems }) => {
                                         as="select"
                                         name={`lineItemProblems.${lineItem.id}`}
                                         disabled={values.entireReservationUndelivered}
+                                        value={values.lineItemProblems[lineItem.id]?.selectedValue || 'nothingWrong'}
+                                        onChange={(e) => {
+                                            const updatedLineItemProblems = {
+                                                ...values.lineItemProblems,
+                                                [lineItem.id]: { ...lineItem, selectedValue: e.target.value },
+                                            };
+                                            setFieldValue('lineItemProblems', updatedLineItemProblems);
+                                        }}
                                     >
                                         <option value="nothingWrong">Nothing is wrong with this item</option>
                                         <option value="itemMissing">Item is missing from reservation</option>

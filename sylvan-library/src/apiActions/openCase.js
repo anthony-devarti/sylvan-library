@@ -11,7 +11,7 @@ const openCase = async (formValues) => {
             const allLineItems = formValues.lineItems.map(lineItem => ({ id: lineItem.id, issue: 'entire_reservation_undelivered' }));
             finalLineItemProblems = allLineItems;
         }
-
+        
         const response = await axios.post(
             `${baseURL}reservation/${formValues.reservationID}/open_case/`,  // Replace with your actual endpoint
             {
