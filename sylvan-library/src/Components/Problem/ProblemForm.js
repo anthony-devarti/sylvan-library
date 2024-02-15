@@ -1,25 +1,37 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Alert, Button } from 'react-bootstrap';
+import openCase from '../../apiActions/openCase';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const ProblemForm = ({ reservationID, lineItems }) => {
+    const userID = useSelector(state => state.user.userID)
+    const navigate = useNavigate()
+
     if (!reservationID || !lineItems) {
         return (
             <Alert variant='danger'>Something went wrong. Perhaps you didn't get here the way you were supposed to?</Alert>
         )
     }
+
     const initialValues = {
-        reservationId: reservationID,
+        userID: userID,
+        reservationID: reservationID,
         entireReservationUndelivered: false,
         lineItemProblems: lineItems.reduce((acc, lineItem) => {
             acc[lineItem.id] = 'nothingWrong';
             return acc;
         }, {}),
+        note: '',
     };
 
     const handleSubmit = (values) => {
         // Handle form submission logic here
         console.log(values);
+        openCase(values)
+        //now we should redirect back to the reservations route.
+        navigate('/reservations')
     };
 
     return (
@@ -54,6 +66,18 @@ const ProblemForm = ({ reservationID, lineItems }) => {
                                 </label>
                             </div>
                         ))}
+                    </div>
+
+                    <div>
+                        <label>
+                            Note:
+                            <Field
+                                as="textarea"
+                                name="note"
+                                maxLength={200}
+                            />
+                            <ErrorMessage name="note" component="div" className="error" />
+                        </label>
                     </div>
 
                     <div>
