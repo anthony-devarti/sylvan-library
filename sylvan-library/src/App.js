@@ -31,7 +31,8 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/reservations" element={<Reservations/>} />
           <Route path="/lenderdashboard" element={<Home/>} />
-          <Route path="problem/:reservationID" element={<Problem />} />
+          <Route path="delivery-issue/:reservationID" element={<Problem mode={'delivery'}/>} />
+          <Route path="lost-cards/:reservationID" element={<Problem mode={'lost'}/>} />          
         </Routes>
       </Router>
     </div>

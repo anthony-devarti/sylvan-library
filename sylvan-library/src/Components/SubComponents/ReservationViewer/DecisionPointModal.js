@@ -29,11 +29,12 @@ const DecisionPointModal = ({ show, handleClose, decision, reservation }) => {
         case decisionPoint.borrower_accepts_contents:
             acceptMethod = 'accept_delivery'
             declineMethod = 'decline_delivery'
-            declineRoute = `/problem/${reservation.id}`
+            declineRoute = `/delivery-issue/${reservation.id}`
             break;
         case decisionPoint.lender_received_by_due_date:
             acceptMethod = 'return_cards'
             declineMethod = 'mark_as_late' //this method does not exist yet.
+            declineRoute = `/lost-cards/${reservation.id}`
         default:
             break;
     }
