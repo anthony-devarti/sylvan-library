@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Alert, Button } from 'react-bootstrap';
 import openCase from '../../apiActions/openCase';
+import reportLost from '../../apiActions/reportLost';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -26,7 +27,12 @@ const ProblemForm = ({ reservationID, lineItems, mode }) => {
     const handleSubmit = (values) => {
         // Handle form submission logic here
         // console.log(values);
-        openCase(values)
+        if (mode == 'delivery') {
+            openCase(values)
+        }
+        if (mode == 'lost') {
+            reportLost(values)
+        }
         // Now we should redirect back to the reservations route.
         navigate('/reservations')
     };
