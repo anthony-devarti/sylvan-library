@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import getReservationCardsList from "../apiActions/getReservationCardsList";
 import { useParams } from 'react-router-dom';
 
-const Problem = () => {
+const Problem = ({mode}) => {
     const [ list, setList ] = useState([])
     const params = useParams()
 
@@ -22,7 +22,7 @@ const Problem = () => {
 
     return (
         <div className="problem">
-            <ProblemForm lineItems={list} reservationID={params.reservationID}/>
+            <ProblemForm lineItems={list} reservationID={params.reservationID} mode={mode}/>
         </div>
     )
 }
