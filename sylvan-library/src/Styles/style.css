@@ -264,6 +264,13 @@
   font-size: larger;
 }
 
+.loader .full-screen-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
 .home {
   background-image: url("../../public/sylvanLibrary.png");
   width: 100vw;
@@ -303,12 +310,6 @@
 .home .btn:hover {
   background-color: #70194d;
   transform: scale(1.005);
-}
-.home .full-screen-loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 90vh;
 }
 
 .reservations {

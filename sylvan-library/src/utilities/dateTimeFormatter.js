@@ -38,3 +38,9 @@ export const getCurrentDate = () => {
   
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
+
+  export function dateTimeUnformatter(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
+    return formattedDate;
+  }

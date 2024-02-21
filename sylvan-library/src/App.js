@@ -3,6 +3,7 @@ import './Styles/style.css';
 import Home from './Routes/Home'
 import Reservations from './Routes/Reservations';
 import Problem from './Routes/Problem';
+import Lender from './Routes/Lender';
 import { ToastContainer, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
@@ -33,6 +34,7 @@ function App() {
           <Route path="/lenderdashboard" element={<Home/>} />
           <Route path="delivery-issue/:reservationID" element={<Problem mode={'delivery'}/>} />
           <Route path="lost-cards/:reservationID" element={<Problem mode={'lost'}/>} />          
+          <Route path="lender" element={<Lender/>} />          
         </Routes>
       </Router>
     </div>
